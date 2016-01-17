@@ -9,6 +9,7 @@ var hamburgerIcon = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAKAAAABsCAYAA
 
 export default class SidebarNav extends React.Component {
 	learn() {
+	  this.props.onToggleDraw();
 	  this.props.navigator.push(ExRouter.getLearnRoute());
 	}
 	dashboard() {
