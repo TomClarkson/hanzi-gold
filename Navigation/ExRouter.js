@@ -47,10 +47,11 @@ const ExRouter = {
   getHomeRoute() {
     return {
       getSceneClass() {
-        // return Splash;
-        return Dashboard;
+        return Splash;
+        // return Dashboard;
         // return Login;
         // return Onboarding;
+        // return Learn;
       }
     };
   },

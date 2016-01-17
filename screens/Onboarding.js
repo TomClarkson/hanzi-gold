@@ -1,5 +1,5 @@
 import React, { 
-	Component, Image, AsyncStorage, StyleSheet, View, Text, TextInput, TouchableHighlight
+	Component, Image, AsyncStorage, StyleSheet, View, Text, TextInput, TouchableHighlight, Alert
 } from 'react-native';
 import { connect } from 'react-redux/native';
 import Colors from 'Colors';
@@ -7,17 +7,31 @@ import Dimensions from 'Dimensions';
 import ExNavigator from '@exponent/react-native-navigator';
 import ExRouter from 'ExRouter';
 import getCardsToStudy from '../domain/getCardsToStudy';
-// import { getCards, getAttempts } from '../storage';
 import { loadDeck } from '../redux/deck';
 import CurrentDeck from '../components/CurrentDeck';
 import Button from '../components/Button';
 import Header from '../components/Header';
 import DrawerLayout from 'react-native-drawer-layout';
 import SidebarNav from '../components/SidebarNav';
+import { getUser, getCards } from 'Storage';
 
 class Onboarding extends React.Component {
   componentDidMount() {
-    this.props.dispatch(loadDeck(5)); 
+    // this.props.dispatch(loadDeck(5)); 
+    // getUser().then(u => {
+    //   Alert.alert(
+    //     'GOT USER',
+    //     JSON.stringify(u)
+    //   );
+    // });
+
+  getCardsToStudy(5).then(cards => {
+    Alert.alert(
+      'CARDS TO STUDY',
+      JSON.stringify(cards[0])
+    );
+  });
+    
   }
   learn() {
     this.props.navigator.push(ExRouter.getLearnRoute());
@@ -29,13 +43,13 @@ class Onboarding extends React.Component {
     this.drawer.closeDrawer();
   }
   render() {
-    let {username} = this.props;
+    let {username, navigator} = this.props;
 
     return (
       <DrawerLayout
         ref={(drawer) => { return this.drawer = drawer }}
         drawerWidth={310}
-        renderNavigationView={() => <SidebarNav onToggleDraw={this.closeDrawer.bind(this)} />}>
+        renderNavigationView={() => <SidebarNav navigator={navigator} onToggleDraw={this.closeDrawer.bind(this)} />}>
         <View style={styles.contentContainer}>
           <Header onToggleDraw={this.openDrawer.bind(this)} title="Hanzi Gold" />
           <View style={styles.statsContainer}>

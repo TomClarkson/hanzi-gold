@@ -20,8 +20,8 @@ class NewSplash extends React.Component {
 	  				this.props.navigator.push(ExRouter.getLoginRoute());
 	  			} else {
 	  				this.props.dispatch(loadUser(user));
-	  				// this.props.navigator.push(dashboardRoute);
-	  				this.props.navigator.push(ExRouter.getDashboardRoute());
+	  				// this.props.navigator.push(ExRouter.getDashboardRoute());
+	  				this.props.navigator.push(ExRouter.getOnboardingRoute());
 	  			}
 	  		});
 		}, 1000);

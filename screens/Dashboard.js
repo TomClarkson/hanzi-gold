@@ -7,7 +7,7 @@ import Dimensions from 'Dimensions';
 import ExNavigator from '@exponent/react-native-navigator';
 import ExRouter from 'ExRouter';
 import getCardsToStudy from '../domain/getCardsToStudy';
-// import { getCards, getAttempts } from '../storage';
+// import { getCards, getAttempts } from 'Storage';
 import { loadDeck } from '../redux/deck';
 import CurrentDeck from '../components/CurrentDeck';
 import Button from '../components/Button';
@@ -50,6 +50,8 @@ class Dashboard extends React.Component {
     let correct = 20;
     let wrong = 20;
 
+    console.log('yoyo');
+
     return (
       <DrawerLayout
         ref={(drawer) => { return this.drawer = drawer }}
@@ -66,6 +68,7 @@ class Dashboard extends React.Component {
             </View>
           </View>
           <View style={styles.learnContainer}>
+            <Text>How many cards {cardsInDeck.length}</Text>
             <View style={styles.currentDeckWrapper}>
               <CurrentDeck cards={cardsInDeck} />
             </View>

@@ -50,7 +50,7 @@ var styles = StyleSheet.create({
 		backgroundColor: '#FDDE4A',
 		justifyContent: 'center',
 		alignItems: 'center',
-		borderWidth: 4,
+		borderWidth: 3,
 		borderColor: '#EAB700'
 	},
 	innerWrapper: {

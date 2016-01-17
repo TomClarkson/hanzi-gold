@@ -58,10 +58,16 @@ class Learn extends React.Component {
     if(! currentCard) {
       return (
         <View style={styles.contentContainer}>
-          <Text>LOADING...</Text>
+          <Text>...LOADING...</Text>
         </View>
       );      
     }
+
+    return (
+      <View style={styles.contentContainer}>
+        <Text>ALL GOOD</Text>
+      </View>
+    );
 
     var item = this.getItemFromCard(currentCard);
 
@@ -97,7 +103,7 @@ var studyViewStyle = {
   },
   headerText: {
     fontSize: 30,
-    marginBottom: 20,
+    marginBottom: 15,
     fontWeight: "bold"
   },
   imageContainer: {
@@ -111,11 +117,11 @@ var studyViewStyle = {
   },
   descriptionText: {
     fontSize: 20,
-    lineHeight: 1.4
+    lineHeight: 28
   },
   image: {  
-    height: 200,
-    width: 200,
+    height: 250,
+    width: 250,
   },
   confirmButtonContainer: {
 
@@ -211,7 +217,7 @@ class QuestionView extends React.Component {
                   backgroundColor: Colors.RED,
                   flexDirection: 'column'
                 }}>
-                  <Text style={{color: '#fff', textDecoration: 'line-through'}}>{this.state.answer}</Text>
+                  <Text style={{color: '#fff', textDecorationLine: 'line-through'}}>{this.state.answer}</Text>
                   <Text>{this.props.english}</Text>
                 </View>
               }
@@ -219,7 +225,6 @@ class QuestionView extends React.Component {
           }
           {!isWrong &&
             <View style={{flex: 1, flexDirection: 'column'}}>
-              <Text>!YOUR NOT WRONG THERE</Text>
               <TextInput
                 autoCorrect={false}
                 autoCapitalize="none"

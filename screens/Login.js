@@ -24,7 +24,6 @@ class Login extends Component {
 	}
 	onSignIn() {
 		let {username} = this.state;
-		console.log(1);
 		if(username) {
 			saveUser(username).then(user => {				
 				this.props.dispatch(loadUser(user));
@@ -121,7 +120,6 @@ const styles = StyleSheet.create({
     padding: 10,
     borderWidth: 2,
     borderBottomColor: '#CCC',
-    borderColor: 'transparent',
     backgroundColor: '#fff',
     borderWidth: 0,
     borderRadius: 8,
