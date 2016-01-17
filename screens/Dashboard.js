@@ -26,13 +26,12 @@ class Dashboard extends React.Component {
   }
   componentDidMount() {
     this.props.dispatch(loadDeck(5)); 
-    // getCards().then(cards => {
-    //   console.log('cards', cards)
-    //   this.setState({cards});
-    // });
-    // getAttempts().then(attempts => {
-    //  this.setState({attempts});
-    // });
+    getCards().then(cards => {
+      this.setState({cards});
+    });
+    getAttempts().then(attempts => {
+     this.setState({attempts});
+    });
   }
   learn() {
     this.props.navigator.push(ExRouter.getLearnRoute());
@@ -44,13 +43,11 @@ class Dashboard extends React.Component {
     this.drawer.closeDrawer();
   }
   render() {
-    let {cardsInDeck, username, navigator} = this.props;
-    let points = 20;
-    let wordsLearnt = 20;
-    let correct = 20;
-    let wrong = 20;
-
-    console.log('yoyo');
+    let {cardsInDeck, points, username, navigator} = this.props;
+    let {cards} = this.state;
+    var correct = cards.reduce((acc,c) => acc + c.correct, 0);
+    var wrong = cards.reduce((acc,c) => acc + c.wrong, 0);
+    var wordsLearnt = cards.filter(c => c.leitnerBox == 5).length;
 
     return (
       <DrawerLayout
@@ -68,7 +65,6 @@ class Dashboard extends React.Component {
             </View>
           </View>
           <View style={styles.learnContainer}>
-            <Text>How many cards {cardsInDeck.length}</Text>
             <View style={styles.currentDeckWrapper}>
               <CurrentDeck cards={cardsInDeck} />
             </View>
