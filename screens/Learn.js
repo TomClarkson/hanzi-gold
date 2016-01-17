@@ -10,7 +10,8 @@ import {loadDeck, markCardAsStudied, markCorrect, markWrong} from '../redux/deck
 import characters from 'Characters';
 import {updatePoints} from '../redux/user';
 import {Motion, spring} from 'react-motion/native';
-import BackButton from '../components/BackButton';
+import GoBackHeader from '../components/GoBackHeader';
+import Button from '../components/Button';
 
 class Learn extends React.Component {
   constructor(props) {
@@ -68,10 +69,7 @@ class Learn extends React.Component {
 
     return (
       <View style={styles.contentContainer}>
-        <View style={styles.topRow}>
-        <BackButton navigator={navigator} />
-        <Text>Points {points}</Text>
-        </View>
+        <GoBackHeader navigator={navigator} />
         <View style={styles.slideContainer}>
           <SlideWrapper item={item} />
         </View>
@@ -82,20 +80,33 @@ class Learn extends React.Component {
 
 var studyViewStyle = {
   itemContainer: {
-    height: 400,
-    width: 400,
-    backgroundColor: 'pink'
+    height: Dimensions.get('window').height - 110,
+    width: Dimensions.get('window').width - 40,
+    backgroundColor: Colors.WHITE,
+    borderRadius: 5,
+    borderWidth: 0,
+    padding: 20
   },
   englishHeader: {
-
+    alignItems: 'center',
+    justifyContent: 'center'
   },
   hanziHeader: {
-
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  headerText: {
+    fontSize: 20,
+    fontWeight: "bold"
   },
   imageContainer: {
-
+    alignItems: 'center',
+    justifyContent: 'center'
   },
-  image: {
+  description: {
+    flex: 1
+  },
+  image: {  
     height: 200,
     width: 200,
   },
@@ -112,10 +123,10 @@ const StudyView = ({id, english, hanzi, description, image, markAsStudied}) => {
   return (
     <View style={studyViewStyle.itemContainer}>
       <View style={studyViewStyle.englishHeader}>
-        <Text>{english}</Text>
+        <Text style={studyViewStyle.headerText}>{english}</Text>    
       </View>
       <View style={studyViewStyle.hanziHeader}>
-        <Text>{hanzi}</Text>
+        <Text style={studyViewStyle.headerText}>{hanzi}</Text>
       </View>
       <View style={studyViewStyle.imageContainer}>
         <Image style={studyViewStyle.image} source={{uri:image}} />        
@@ -124,12 +135,8 @@ const StudyView = ({id, english, hanzi, description, image, markAsStudied}) => {
         <Text>{description}</Text>
       </View>
       <View style={studyViewStyle.confirmButtonContainer}>
-        <TouchableHighlight onPress={markAsStudied}>
-          <View style={studyViewStyle.confirmButton}>
-            <Text>Ok, got it!</Text>
-          </View>
-        </TouchableHighlight>
-        </View>
+        <Button onPress={markAsStudied}>Got it!</Button>
+      </View>
     </View>
   );
 }
@@ -236,11 +243,9 @@ var styles = StyleSheet.create({
   },
   slideContainer: {
     flex: 1,
-    padding: 10,
+    padding: 20,
     width: Dimensions.get('window').width,
-    borderColor: 'red',
-    borderWidth: 1,
-    overflow: 'hidden'
+    overflow: 'hidden',
   },
   topRow: {
     marginTop: 40,

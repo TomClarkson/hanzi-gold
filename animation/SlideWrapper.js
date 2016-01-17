@@ -5,12 +5,11 @@ import Dimensions from 'Dimensions';
 const Slide = ({slide}) => {
   var slideContainerStyes = {
     flex: 1,
-    backgroundColor: 'orange',
     left: slide.x,
     position: 'absolute',
     height: slide.item.height,
     opacity: slide.opacity,
-    width: Dimensions.get('window').width - 20
+    width: Dimensions.get('window').width - 40
   };
 
   return (
