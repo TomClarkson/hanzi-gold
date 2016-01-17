@@ -12,10 +12,14 @@ export function getUser() {
 }
 
 export function saveUser(username) {
-	let user = {username, points: 0};
-	let userString = JSON.stringify(user);
-	AsyncStorage.setItem('user', userString);
-	AsyncStorage.setItem('cards', JSON.stringify([]));
+	return new Promise((resolve, reject) => {
+		let user = {username, points: 0};
+		let userString = JSON.stringify(user);
+
+		AsyncStorage.setItem('user', userString);
+		AsyncStorage.setItem('cards', JSON.stringify([]));
+		resolve(user);
+	});
 }
 
 export function getCards() {

@@ -15,24 +15,9 @@ import Header from '../components/Header';
 import DrawerLayout from 'react-native-drawer-layout';
 import SidebarNav from '../components/SidebarNav';
 
-
-class Dashboard extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      cards: [],
-      attempts: []
-    };
-  }
+class Onboarding extends React.Component {
   componentDidMount() {
     this.props.dispatch(loadDeck(5)); 
-    // getCards().then(cards => {
-    //   console.log('cards', cards)
-    //   this.setState({cards});
-    // });
-    // getAttempts().then(attempts => {
-    //  this.setState({attempts});
-    // });
   }
   learn() {
     this.props.navigator.push(ExRouter.getLearnRoute());
@@ -44,12 +29,7 @@ class Dashboard extends React.Component {
     this.drawer.closeDrawer();
   }
   render() {
-    let {cardsInDeck, username} = this.props;
-    console.log('u', username);
-    let points = 20;
-    let wordsLearnt = 20;
-    let correct = 20;
-    let wrong = 20;
+    let {username} = this.props;
 
     return (
       <DrawerLayout
@@ -59,19 +39,12 @@ class Dashboard extends React.Component {
         <View style={styles.contentContainer}>
           <Header onToggleDraw={this.openDrawer.bind(this)} title="Hanzi Gold" />
           <View style={styles.statsContainer}>
-            <Text style={{flex: 3, marginTop: 15, fontSize: 40, color: '#666', alignSelf: 'center'}}>{points}</Text>
-            <View style={{flex: 1, marginBottom: 0, flexDirection: 'row', justifyContent: 'space-around'}}>
-              <Text>Learnt: {wordsLearnt}</Text>
-              <Text>Correct: {correct}</Text>
-              <Text>Incorrect: {wrong}</Text>
-            </View>
-          </View>
-          <View style={styles.learnContainer}>
-            <View style={styles.currentDeckWrapper}>
-              <CurrentDeck cards={cardsInDeck} />
-            </View>
-            <View style={styles.learnButtonWrapper}>
-              <Button onPress={this.learn.bind(this)}>Learn</Button>
+            <Text style={styles.leadText}>Hi {username}, Welcome to Hanzi Gold!</Text>
+            <Text style={styles.secondText}>Our learn mode will guide you through hanzi with memorable descriptions.</Text> 
+            <Text style={styles.secondText}>After seeing the description you will be tested and with each correct answer you will gain points and increase word strength.</Text>
+            <Text style={styles.secondText}>Open the menu in the top left to find other learning modes.</Text>
+            <View style={{margin: 25}}>
+              <Button onPress={this.learn.bind(this)}>Start Learning!</Button>
             </View>
           </View>
         </View>
@@ -81,11 +54,9 @@ class Dashboard extends React.Component {
 }
 
 export default connect(state => ({
-  cardsInDeck: state.deck.cards,
-  allCardsCompleted: state.deck.allCardsCompleted,
   username: state.user.username,
   points: state.user.points
-}))(Dashboard);
+}))(Onboarding);
 
 var styles = StyleSheet.create({
   contentContainer: {
@@ -104,6 +75,24 @@ var styles = StyleSheet.create({
     color: Colors.WHITE,
     fontSize: 22,
     fontWeight: "bold"
+  },
+  leadText: {
+    color: Colors.BLACK,
+    textAlign: 'center',
+    marginLeft: 25,
+    marginRight: 25,
+    marginTop: 30,
+    marginBottom: 30,
+    fontSize: 28,
+    fontWeight: 'bold'
+  },
+  secondText: {
+    color: Colors.BLACK,
+    marginLeft: 25,
+    marginRight: 25,
+    marginTop: 10,
+    marginBottom: 10,
+    fontSize: 18,
   },
   statsContainer: {
     flex: 0.2,

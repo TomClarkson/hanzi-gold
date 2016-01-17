@@ -17,6 +17,7 @@ import Splash from '../screens/Splash';
 import Dashboard from '../screens/Dashboard';
 import Login from '../screens/Login';
 import Learn from '../screens/Learn';
+import Onboarding from '../screens/Onboarding';
 
 const ExRouter = {
   getLoginRoute() {
@@ -48,6 +49,8 @@ const ExRouter = {
       getSceneClass() {
         // return Splash;
         return Dashboard;
+        // return Login;
+        // return Onboarding;
       }
     };
   },
@@ -58,6 +61,16 @@ const ExRouter = {
       },
       configureScene() {
         return ExNavigator.SceneConfigs.FloatFromBottom;
+      }
+    };
+  },
+  getOnboardingRoute() {
+    return {
+      getSceneClass() {
+        return Onboarding;
+      },
+      configureScene() {
+        return ExNavigator.SceneConfigs.ZoomFromFront;
       }
     };
   }
