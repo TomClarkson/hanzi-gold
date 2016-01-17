@@ -22,6 +22,7 @@ import ExRouter from 'ExRouter';
 import configureStore from './redux/configureStore';
 import getCardsToStudy from './domain/getCardsToStudy';
 import { Provider } from 'react-redux/native';
+import './es6/array.prototype.includes';
 
 getCardsToStudy(5).then(cards => {
   console.log('cards', cards);

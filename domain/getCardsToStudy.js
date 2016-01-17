@@ -15,14 +15,16 @@ export default function getCardsToStudy(numCardsWanted, excludeIds = []) {
 				resolve(cardsFromStorageToStudy);	
 			}
 
-			resolve([{tom: '1cardsToStudy', num: numCardsWanted}]);
+			
 
-			// var charsAlreadyCardsIds = cardsFromStorage.map(c => c.id);
-			// var numOfCharsNeeded = numCardsWanted - cardsFromStorageToStudy.length;
-			// var otherCardsToStudy = characters.filter(c => !charsAlreadyCardsIds.includes(c.id)).slice(0, numOfCharsNeeded);
+			var charsAlreadyCardsIds = cardsFromStorage.map(c => c.id);
+			var numOfCharsNeeded = numCardsWanted - cardsFromStorageToStudy.length;
+			var otherCardsToStudy = characters.filter(c => !charsAlreadyCardsIds.includes(c.id)).slice(0, numOfCharsNeeded);			
+			// var otherCardsToStudy = characters.slice(0, numOfCharsNeeded);			
+			// resolve([{tom: 'cardsToStudy', otherCardsToStudy}]);
 
-			// var cardsToStudy = cardsFromStorageToStudy.concat(otherCardsToStudy).map(c => makeCard(c, lietnerBoxIntervals[0]));
-			// resolve(cardsToStudy);
+			var cardsToStudy = cardsFromStorageToStudy.concat(otherCardsToStudy).map(c => makeCard(c, lietnerBoxIntervals[0]));
+			resolve(cardsToStudy);
 		});
 	});
 };

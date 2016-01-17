@@ -7,7 +7,7 @@ import Dimensions from 'Dimensions';
 import ExNavigator from '@exponent/react-native-navigator';
 import ExRouter from 'ExRouter';
 import getCardsToStudy from '../domain/getCardsToStudy';
-// import { getCards, getAttempts } from 'Storage';
+import { getCards, getAttempts } from 'Storage';
 import { loadDeck } from '../redux/deck';
 import CurrentDeck from '../components/CurrentDeck';
 import Button from '../components/Button';

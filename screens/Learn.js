@@ -63,12 +63,6 @@ class Learn extends React.Component {
       );      
     }
 
-    return (
-      <View style={styles.contentContainer}>
-        <Text>ALL GOOD</Text>
-      </View>
-    );
-
     var item = this.getItemFromCard(currentCard);
 
     var character = characters.find(c => c.id == currentCard.id);

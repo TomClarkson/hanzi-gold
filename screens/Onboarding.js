@@ -25,12 +25,12 @@ class Onboarding extends React.Component {
     //   );
     // });
 
-  getCardsToStudy(5).then(cards => {
-    Alert.alert(
-      'CARDS TO STUDY',
-      JSON.stringify(cards[0])
-    );
-  });
+  // getCardsToStudy(5).then(cards => {
+  //   Alert.alert(
+  //     'CARDS TO STUDY',
+  //     JSON.stringify(cards[0])
+  //   );
+  // });
     
   }
   learn() {
