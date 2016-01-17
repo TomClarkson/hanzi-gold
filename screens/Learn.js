@@ -96,7 +96,8 @@ var studyViewStyle = {
     justifyContent: 'center'
   },
   headerText: {
-    fontSize: 20,
+    fontSize: 30,
+    marginBottom: 20,
     fontWeight: "bold"
   },
   imageContainer: {
@@ -104,7 +105,13 @@ var studyViewStyle = {
     justifyContent: 'center'
   },
   description: {
-    flex: 1
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  descriptionText: {
+    fontSize: 20,
+    lineHeight: 1.4
   },
   image: {  
     height: 200,
@@ -132,7 +139,7 @@ const StudyView = ({id, english, hanzi, description, image, markAsStudied}) => {
         <Image style={studyViewStyle.image} source={{uri:image}} />        
       </View>
       <View style={studyViewStyle.description}>
-        <Text>{description}</Text>
+        <Text style={studyViewStyle.descriptionText}>{description}</Text>
       </View>
       <View style={studyViewStyle.confirmButtonContainer}>
         <Button onPress={markAsStudied}>Got it!</Button>
