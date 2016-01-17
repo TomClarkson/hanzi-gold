@@ -54,6 +54,7 @@ class Login extends Component {
 		    	    	<Image style={styles.inputUsername} source={{uri: userIconImage }}/>
 		    	    	<TextInput
 		    	    	  style={[styles.input, styles.greyFont]}
+		    	    	  underlineColorAndroid='rgba(0,0,0,0)'
 		    	    	  placeholder='Username'
 		    	    	  value={this.state.username}
 		    	    	  onChangeText={this.handleChange.bind(this)}
