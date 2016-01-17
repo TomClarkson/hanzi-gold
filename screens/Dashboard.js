@@ -44,8 +44,7 @@ class Dashboard extends React.Component {
     this.drawer.closeDrawer();
   }
   render() {
-    let {cardsInDeck, username} = this.props;
-    console.log('u', username);
+    let {cardsInDeck, username, navigator} = this.props;
     let points = 20;
     let wordsLearnt = 20;
     let correct = 20;
@@ -55,7 +54,7 @@ class Dashboard extends React.Component {
       <DrawerLayout
         ref={(drawer) => { return this.drawer = drawer }}
         drawerWidth={310}
-        renderNavigationView={() => <SidebarNav onToggleDraw={this.closeDrawer.bind(this)} />}>
+        renderNavigationView={() => <SidebarNav navigator={navigator} onToggleDraw={this.closeDrawer.bind(this)} />}>
         <View style={styles.contentContainer}>
           <Header onToggleDraw={this.openDrawer.bind(this)} title="Hanzi Gold" />
           <View style={styles.statsContainer}>
