@@ -4,26 +4,26 @@ import React, {
 import moment from 'moment';
 import LeitnerBox from './LeitnerBox';
 
-export default class CurrentDeck extends Component {
+export default class CharacterList extends Component {
   render() {
     let {cards} = this.props;
     
-    // <Text>Next Review</Text>
-    // <Text>{moment(c.nextReview).calendar()}</Text>
     return (
       <View style={styles.container}>
         <View style={styles.rowWrapper} key={-1}>
-          <Text style={[styles.headerText, styles.thirdGird]}>Word</Text>
-          <Text style={[styles.headerText, styles.thirdGird]}>Hanzi</Text> 
-          <Text style={[styles.headerText, styles.thirdGird]}>Level</Text> 
+          <Text style={[styles.headerText, styles.quarterGrid]}>Word</Text>
+          <Text style={[styles.headerText, styles.quarterGrid]}>Hanzi</Text> 
+          <Text style={[styles.headerText, styles.quarterGrid]}>Level</Text>
+          <Text style={[styles.headerText, styles.quarterGrid]}>Detail</Text> 
         </View>
         {cards.map(c =>
          <View style={styles.rowWrapper} key={c.id}>
-          <Text style={[styles.englishText, styles.thirdGird]}>{c.english}</Text>
-          <Text style={[styles.hanziText, styles.thirdGird]}>{c.hanzi}</Text> 
-          <View style={styles.thirdGird}>
+          <Text style={[styles.englishText, styles.quarterGrid]}>{c.english}</Text>
+          <Text style={[styles.hanziText, styles.quarterGrid]}>{c.hanzi}</Text> 
+          <View style={styles.quarterGrid}>
             <LeitnerBox leitnerBox={c.leitnerBox} />
           </View>
+          <Text style={[styles.headerText, styles.quarterGrid]}>-></Text>
          </View>
         )}
       </View>
@@ -56,7 +56,7 @@ var styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "bold"
   },
-  thirdGird: {
-    flex: 0.3
+  quarterGrid: {
+    flex: 0.25
   }
 }); 

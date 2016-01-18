@@ -50,11 +50,11 @@ const ExRouter = {
     return {
       getSceneClass() {
         // return Splash;
-        return Dashboard;
+        // return Dashboard;
         // return Login;
       // return Onboarding;
         // return Learn;
-        // return CharacterList;
+        return CharacterList;
       }
     };
   },

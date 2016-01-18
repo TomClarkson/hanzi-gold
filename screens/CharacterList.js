@@ -7,33 +7,29 @@ import Dimensions from 'Dimensions';
 import ExNavigator from '@exponent/react-native-navigator';
 import ExRouter from 'ExRouter';
 import getCardsToStudy from '../domain/getCardsToStudy';
-import { getCards, getAttempts } from 'Storage';
-import { loadDeck } from '../redux/deck';
+import { getCards } from 'Storage';
 import CurrentDeck from '../components/CurrentDeck';
-import Button from '../components/Button';
+import CharacterList from '../components/CharacterList';
 import Header from '../components/Header';
 import DrawerLayout from 'react-native-drawer-layout';
 import SidebarNav from '../components/SidebarNav';
+import makeCard from '../domain/makeCard';
 
-class CharacterList extends React.Component {
+class CharacterListScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      cards: [],
-      attempts: []
+      cards: []    
     };
   }
   componentDidMount() {
-    this.props.dispatch(loadDeck(5)); 
-    getCards().then(cards => {
-      this.setState({cards});
-    });
-    getAttempts().then(attempts => {
-     this.setState({attempts});
-    });
-  }
-  learn() {
-    this.props.navigator.push(ExRouter.getLearnRoute());
+    // getCards();
+    // merge with characters
+      // .then(cards => cards.map(makeCard))
+      // .then(cards => {
+      //   console.log('c', cards);
+      //   this.setState({cards});
+      // });
   }
   openDrawer() {
     this.drawer.openDrawer();
@@ -42,8 +38,7 @@ class CharacterList extends React.Component {
     this.drawer.closeDrawer();
   }
   render() {
-    console.log('PROPS', this.props);
-    let {cardsInDeck, points, username, navigator} = this.props;
+    let {navigator} = this.props;
     let {cards} = this.state;
     var correct = cards.reduce((acc,c) => acc + c.correct, 0);
     var wrong = cards.reduce((acc,c) => acc + c.wrong, 0);
@@ -56,29 +51,11 @@ class CharacterList extends React.Component {
         renderNavigationView={() => <SidebarNav navigator={navigator} onToggleDraw={this.closeDrawer.bind(this)} />}>
         <View style={styles.contentContainer}>
           <Header onToggleDraw={this.openDrawer.bind(this)} title="All Characters" />
-          <View style={styles.statsContainer}>
-            <Text style={{flex: 2, marginTop: 15, fontWeight: "bold", fontSize: 44, color: Colors.BLACK, alignSelf: 'center'}}>
-              Character List
-            </Text>
-            <View style={{flex: 1, marginRight: 15, marginLeft: 15, marginBottom: 10, flexDirection: 'row', justifyContent: 'space-around'}}>
-              <Text style={{fontSize: 18}}>Learnt: {wordsLearnt}</Text>
-              <Text style={{fontSize: 18}}>Correct: {correct}</Text>
-              <Text style={{fontSize: 18}}>Incorrect: {wrong}</Text>
-            </View>
-          </View>
           <View style={styles.learnContainer}>
             <View style={styles.currentDeckWrapper}>
-              <View style={{marginLeft: 35, marginTop: 25}}>
-                <Text style={{fontSize: 18, marginBottom: 15, fontWeight: "bold"}}>
-                  Next Hanzi to learn
-                </Text>
-              </View>
               <View style={{flex: 1, marginLeft: 15}}>
-                <CurrentDeck cards={cardsInDeck} />
+                <CharacterList cards={cards} />
               </View>
-            </View>
-            <View style={styles.learnButtonWrapper}>
-              <Button onPress={this.learn.bind(this)}>Learn</Button>
             </View>
           </View>
         </View>
@@ -92,7 +69,7 @@ export default connect(state => ({
   allCardsCompleted: state.deck.allCardsCompleted,
   username: state.user.username,
   points: state.user.points
-}))(CharacterList);
+}))(CharacterListScreen);
 
 var styles = StyleSheet.create({
   contentContainer: {
