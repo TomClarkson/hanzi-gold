@@ -231,14 +231,13 @@ class QuestionView extends React.Component {
             {!isWrong &&
               <View style={{flex: 1}}>
                 <View style={{
-                  height: 40, 
                   borderColor: '#eee', 
-                  padding: 20, 
-                  borderRadius: 5, 
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  borderWidth: 2}}>
+                  borderWidth: 2, 
+                  borderRadius: 10, 
+                  padding: 15, 
+                  margin: 15}}>
                   <TextInput
+                    style={{height: 50}}
                     underlineColorAndroid='rgba(0,0,0,0)'
                     autoCorrect={false}
                     autoCapitalize="none"
@@ -247,6 +246,7 @@ class QuestionView extends React.Component {
                     onChangeText={(answer) => this.setState({answer})}
                     onEndEditing={this.answer.bind(this)}
                     value={answer} />
+
                 </View>
               </View>
             }
@@ -257,7 +257,24 @@ class QuestionView extends React.Component {
   }
 }
 
-
+// <View style={{
+//   height: 40, 
+//   borderColor: '#eee', 
+//   padding: 20, 
+//   borderRadius: 5, 
+//   justifyContent: 'center',
+//   alignItems: 'center',
+//   borderWidth: 2}}>
+//   <TextInput
+//     underlineColorAndroid='rgba(0,0,0,0)'
+//     autoCorrect={false}
+//     autoCapitalize="none"
+//     autoFocus={true}
+//     placeholder="Enter english meaning"
+//     onChangeText={(answer) => this.setState({answer})}
+//     onEndEditing={this.answer.bind(this)}
+//     value={answer} />
+// </View>
 export default connect(state => ({
   currentCard: state.deck.currentCard,
   cards: state.deck.cards,
