@@ -11,9 +11,20 @@ const boxesToColor = [
   '#5AE539'
 ];
 
+const leitnerBoxToRange = [
+  [0],
+  [0,1],
+  [0,1,2],
+  [0,1,2,3],
+  [0,1,2,3, 4]
+];
 
 const LeitnerBox = ({leitnerBox}) => {
-  var range = Array.from(Array(leitnerBox).keys());
+  // array methods not available in android
+  // var range = Array.from(Array(leitnerBox).keys());
+
+  var range = leitnerBoxToRange[leitnerBox +1];
+
   var boxes = range.map(index => 
     <View 
     key={index}
@@ -24,8 +35,7 @@ const LeitnerBox = ({leitnerBox}) => {
       height: (index + 1) * 4,
       marginRight: 2,
       marginTop: 20 - ((index + 1) * 4)
-    }}>
-    </View>
+    }} />      
   );
 
   return (
