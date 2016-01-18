@@ -15,6 +15,9 @@ export default class SidebarNav extends React.Component {
 	dashboard() {
 	  this.props.navigator.push(ExRouter.getDashboardRoute());
 	}
+	characterList() {
+	  this.props.navigator.push(ExRouter.getCharacterListRoute());
+	}
 	render() {
 		let {onToggleDraw} = this.props;
 		// @Todo filter out current viewed route
@@ -34,6 +37,12 @@ export default class SidebarNav extends React.Component {
 			  	  		<Text style={styles.linkText}>Learn new words with spaced repetition</Text>
 			    	</View>
 			    </TouchableHighlight>
+				<TouchableHighlight onPress={this.characterList.bind(this)}>
+					<View style={styles.linkContainer}>
+				  		<Text style={styles.linkTitle}>View Characters</Text>
+				  		<Text style={styles.linkText}>View all characters</Text>
+					</View>
+				</TouchableHighlight>
 			</View>
 		);
 	}

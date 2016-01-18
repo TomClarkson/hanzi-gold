@@ -18,6 +18,8 @@ import Dashboard from '../screens/Dashboard';
 import Login from '../screens/Login';
 import Learn from '../screens/Learn';
 import Onboarding from '../screens/Onboarding';
+import CharacterList from '../screens/CharacterList';
+import CharacterDetail from '../screens/CharacterDetail';
 
 const ExRouter = {
   getLoginRoute() {
@@ -47,11 +49,12 @@ const ExRouter = {
   getHomeRoute() {
     return {
       getSceneClass() {
-        return Splash;
-        // return Dashboard;
+        // return Splash;
+        return Dashboard;
         // return Login;
-        // return Onboarding;
+      // return Onboarding;
         // return Learn;
+        // return CharacterList;
       }
     };
   },
@@ -74,6 +77,26 @@ const ExRouter = {
         return ExNavigator.SceneConfigs.ZoomFromFront;
       }
     };
+  },
+  getCharacterListRoute() {
+    return {
+      getSceneClass(navigator) {
+        return CharacterList;
+      },
+      configureScene() {
+        return ExNavigator.SceneConfigs.ZoomFromFront;
+      }
+    };
+  },
+  getCharacterDetailRoute() {
+    return {
+      getSceneClass(navigator) {
+       return CharacterDetail;
+      },
+      configureScene() {
+        return ExNavigator.SceneConfigs.ZoomFromFront;
+      }
+    }; 
   }
 };
 
