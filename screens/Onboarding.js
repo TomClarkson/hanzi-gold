@@ -16,23 +16,6 @@ import SidebarNav from '../components/SidebarNav';
 import { getUser, getCards } from 'Storage';
 
 class Onboarding extends React.Component {
-  componentDidMount() {
-    // this.props.dispatch(loadDeck(5)); 
-    // getUser().then(u => {
-    //   Alert.alert(
-    //     'GOT USER',
-    //     JSON.stringify(u)
-    //   );
-    // });
-
-  // getCardsToStudy(5).then(cards => {
-  //   Alert.alert(
-  //     'CARDS TO STUDY',
-  //     JSON.stringify(cards[0])
-  //   );
-  // });
-    
-  }
   learn() {
     this.props.navigator.push(ExRouter.getLearnRoute());
   }
