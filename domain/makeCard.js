@@ -1,6 +1,6 @@
 import moment from 'moment';
 
-export default function({id, hanzi, correct, wrong, leitnerBox, nextReview, lastAction}, initialInterval) {
+export default function({id, english, hanzi, correct, wrong, leitnerBox, nextReview, lastAction}, initialInterval) {
 	var correct = correct || 0;
 	var wrong = wrong || 0;
 	var leitnerBox = leitnerBox || 1;
@@ -9,6 +9,7 @@ export default function({id, hanzi, correct, wrong, leitnerBox, nextReview, last
 	return {
 		id,
 		hanzi,
+		english,
 		correct,
 		wrong,
 		leitnerBox,
