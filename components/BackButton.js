@@ -7,9 +7,12 @@ export default class BackButton extends Component {
     this.props.navigator.pop();
   }
   render() {
+    // ← Back
     return (
       <View>
-        <TouchableHighlight onPress={this.goBack.bind(this)}><Text>← Back</Text></TouchableHighlight>
+        <TouchableHighlight onPress={this.goBack.bind(this)}>
+          <Text style={{fontSize: 25, fontWeight: 'bold', color: '#fff'}}>x</Text>
+        </TouchableHighlight>
       </View>
     );
   }
