@@ -37,8 +37,6 @@ export function loadDeck(numCards) {
 function updateDeck(updatedCard, cards, dispatch) {
   // Storage.saveCard(updatedCard);
 
-  console.log('U')
-
   var newCardsSorted = cards
     .map(c => c.id == updatedCard.id ? updatedCard : c)
     .sort((a, b) => 
