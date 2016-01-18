@@ -1,90 +1,34 @@
 import React, { 
   Component, Image, AsyncStorage, StyleSheet, View, Text, TextInput, TouchableHighlight
 } from 'react-native';
+import ExRouter from 'ExRouter';
 
 export default class BackButton extends Component {
   goBack() {
+    let currentRoutes = this.props.navigator.getCurrentRoutes();
+    if([0,1].includes(currentRoutes.length)) {
+      return this.props.navigator.push(ExRouter.getDashboardRoute());
+    }
+
+    let previousRoute = currentRoutes[currentRoutes.length -2];
+    let wrappedComponent = previousRoute.scene.getWrappedInstance();
+    if(wrappedComponent) {
+      if(wrappedComponent.constructor.name == 'Onboarding') {
+        return this.props.navigator.push(ExRouter.getDashboardRoute());   
+      }
+    }
     this.props.navigator.pop();
   }
   render() {
-    // ← Back
+    
     return (
       <View>
         <TouchableHighlight onPress={this.goBack.bind(this)}>
-          <Text style={{fontSize: 25, fontWeight: 'bold', color: '#fff'}}>x</Text>
+          <Text style={{fontSize: 30, fontWeight: 'bold', color: '#fff'}}>
+            ←
+          </Text>
         </TouchableHighlight>
       </View>
     );
   }
 }
-
-// <TouchableHighlight 
-//   underlayColor='transparent'
-//   activeOpacity={0.4}
-//   onPress={this.goBack.bind(this)}>← Back</TouchableHighlight>
-
-// 'use strict';
-
-// import React from 'react-native';
-// const {
-//   StyleSheet,
-//   TouchableHighlight,
-//   View,
-// } = React;
-
-// import { AppText } from './AppText';
-// import Icon from './Icon';
-
-// const BackButton = React.createClass({
-//   propTypes: {
-//     onPress: React.PropTypes.func,
-//     text: React.PropTypes.string,
-//   },
-//   getDefaultProps: function() {
-//     return {
-//       text: 'Back',
-//     };
-//   },
-//   render: function() {
-//     return (
-//       <TouchableHighlight
-          // underlayColor='transparent'
-          // activeOpacity={0.4}
-//           onPress={this.props.onPress}
-//           style={styles.backButton}>
-//         <View style={styles.buttonContents}>
-//           <View style={styles.icon}>
-//             <Icon
-//               color='rgba(0, 0, 0, 0.4)'
-//               size={30}
-//               type='angleBracketLeft'
-//             />
-//           </View>
-//           <AppText style={styles.backButtonText}>
-//             {this.props.text}
-//           </AppText>
-//         </View>
-//       </TouchableHighlight>
-//     );
-//   }
-// });
-
-// const styles = StyleSheet.create({
-//   backButton: {
-//     alignSelf: 'flex-start',
-//     padding: 15,
-//   },
-//   buttonContents: {
-//     flexDirection: 'row',
-//     marginTop: 3,
-//   },
-//   backButtonText: {
-//     color: 'rgba(0, 0, 0, 0.4)',
-//     fontSize: 20,
-//   },
-//   icon: {
-//     marginTop: 3,
-//   },
-// });
-
-// module.exports = BackButton;
