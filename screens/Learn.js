@@ -85,7 +85,7 @@ var studyViewStyle = {
     backgroundColor: Colors.WHITE,
     borderRadius: 5,
     borderWidth: 0,
-    padding: 20
+    padding: 15
   },
   englishHeader: {
     alignItems: 'center',
@@ -96,8 +96,18 @@ var studyViewStyle = {
     justifyContent: 'center'
   },
   headerText: {
-    fontSize: 30,
-    marginBottom: 15,
+    fontSize: 28,
+    marginBottom: 10,
+    fontWeight: "bold"
+  },
+  hanziHeaderText: {
+    fontSize: 35,
+    marginBottom: 10,
+    fontWeight: "bold"
+  },
+  englishHeaderText: {
+    fontSize: 25,
+    marginBottom: 5,
     fontWeight: "bold"
   },
   imageContainer: {
@@ -110,11 +120,11 @@ var studyViewStyle = {
     justifyContent: 'center'
   },
   descriptionText: {
-    fontSize: 20,
+    fontSize: 18,
     lineHeight: 28
   },
   image: {  
-    height: 250,
+    height: 200,
     width: 250,
   },
   confirmButtonContainer: {
@@ -130,10 +140,10 @@ const StudyView = ({id, english, hanzi, description, image, markAsStudied}) => {
   return (
     <View style={studyViewStyle.itemContainer}>
       <View style={studyViewStyle.englishHeader}>
-        <Text style={studyViewStyle.headerText}>{english}</Text>    
+        <Text style={studyViewStyle.englishHeaderText}>{english}</Text>    
       </View>
       <View style={studyViewStyle.hanziHeader}>
-        <Text style={studyViewStyle.headerText}>{hanzi}</Text>
+        <Text style={studyViewStyle.hanziHeaderText}>{hanzi}</Text>
       </View>
       <View style={studyViewStyle.imageContainer}>
         <Image style={studyViewStyle.image} source={{uri:image}} />        
@@ -196,45 +206,57 @@ class QuestionView extends React.Component {
 
     return (
       <View style={studyViewStyle.itemContainer}>
-        <View style={studyViewStyle.hanziHeader}>
-          <Text>{hanzi}</Text>
-        </View>
-        <View style={Object.assign({}, styles.description, {flexDirection: 'column'})}>
-          {isWrong &&
-            <Motion defaultStyle={{height: 0}} style={{height: spring(200)}}>
-              {value => 
+        <View style={{height: Dimensions.get('window').height * 0.6}}>
+          <View style={[{flex: 0.5}, studyViewStyle.hanziHeader]}>
+            <Text style={{fontSize: 50}}>{hanzi}</Text>
+          </View>
+          <View style={[styles.description, {flex: 0.5, flexDirection: 'column'}]}>
+            {isWrong &&
+              <Motion defaultStyle={{height: 0}} style={{height: spring(200)}}>
+                {value => 
+                  <View style={{
+                    height: value.height, 
+                    marginBottom: 20,
+                    justifyContent: 'center',
+                    alignItems: 'center', 
+                    backgroundColor: Colors.RED,
+                    flexDirection: 'column'
+                  }}>
+                    <Text style={{color: '#fff', textDecorationLine: 'line-through'}}>{this.state.answer}</Text>
+                    <Text>{this.props.english}</Text>
+                  </View>
+                }
+              </Motion>
+            }
+            {!isWrong &&
+              <View style={{flex: 1}}>
                 <View style={{
-                  height: value.height, 
-                  marginBottom: 20,
+                  height: 40, 
+                  borderColor: '#eee', 
+                  padding: 20, 
+                  borderRadius: 5, 
                   justifyContent: 'center',
-                  alignItems: 'center', 
-                  backgroundColor: Colors.RED,
-                  flexDirection: 'column'
-                }}>
-                  <Text style={{color: '#fff', textDecorationLine: 'line-through'}}>{this.state.answer}</Text>
-                  <Text>{this.props.english}</Text>
+                  alignItems: 'center',
+                  borderWidth: 2}}>
+                  <TextInput
+                    underlineColorAndroid='rgba(0,0,0,0)'
+                    autoCorrect={false}
+                    autoCapitalize="none"
+                    autoFocus={true}
+                    placeholder="Enter english meaning"
+                    onChangeText={(answer) => this.setState({answer})}
+                    onEndEditing={this.answer.bind(this)}
+                    value={answer} />
                 </View>
-              }
-            </Motion>
-          }
-          {!isWrong &&
-            <View style={{flex: 1, flexDirection: 'column'}}>
-              <TextInput
-                autoCorrect={false}
-                autoCapitalize="none"
-                autoFocus={true}
-                 style={{height: 40, borderColor: 'gray', borderWidth: 1}}
-                 onChangeText={(answer) => this.setState({answer})}
-                 onEndEditing={this.answer.bind(this)}
-                 value={answer}
-               />
-            </View>
-          }
+              </View>
+            }
+          </View>
         </View>
       </View>
     );
   }
 }
+
 
 export default connect(state => ({
   currentCard: state.deck.currentCard,

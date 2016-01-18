@@ -11,6 +11,7 @@ const boxesToColor = [
   '#5AE539'
 ];
 
+
 const LeitnerBox = ({leitnerBox}) => {
   var range = Array.from(Array(leitnerBox).keys());
   var boxes = range.map(index => 
@@ -28,7 +29,7 @@ const LeitnerBox = ({leitnerBox}) => {
   );
 
   return (
-    <View>
+    <View style={{flexDirection: 'row'}}>
       {boxes}
     </View>
   );
@@ -39,18 +40,22 @@ export default class CurrentDeck extends Component {
   render() {
     let {cards} = this.props;
     
+    // <Text>Next Review</Text>
+    // <Text>{moment(c.nextReview).calendar()}</Text>
     return (
       <View style={styles.container}>
         <View style={styles.rowWrapper} key={-1}>
-          <Text>Hanzi</Text> 
-          <Text>Level</Text>
-          <Text>Next Review</Text>
+          <Text style={[styles.headerText, styles.thirdGird]}>Word</Text>
+          <Text style={[styles.headerText, styles.thirdGird]}>Hanzi</Text> 
+          <Text style={[styles.headerText, styles.thirdGird]}>Level</Text> 
         </View>
         {cards.map(c =>
          <View style={styles.rowWrapper} key={c.id}>
-           <Text>{c.hanzi}</Text> 
-           <View><LeitnerBox leitnerBox={c.leitnerBox} /></View>
-           <Text>{moment(c.nextReview).calendar()}</Text>
+          <Text style={[styles.englishText, styles.thirdGird]}>{c.english}</Text>
+          <Text style={[styles.hanziText, styles.thirdGird]}>{c.hanzi}</Text> 
+          <View style={styles.thirdGird}>
+            <LeitnerBox leitnerBox={c.leitnerBox} />
+          </View>
          </View>
         )}
       </View>
@@ -65,11 +70,23 @@ var styles = StyleSheet.create({
   },
   rowWrapper: {
     flex: 1, 
-    marginTop: 10, 
     marginLeft: 20, 
     marginRight: 20, 
     flexDirection: 'row', 
     alignItems: 'center', 
     justifyContent: 'space-around'
+  },
+  hanziText: {
+    fontSize: 24,
+  },
+  englishText: {
+    fontSize: 22,
+  },
+  headerText: {
+    fontSize: 18,
+    fontWeight: "bold"
+  },
+  thirdGird: {
+    flex: 0.3
   }
 }); 

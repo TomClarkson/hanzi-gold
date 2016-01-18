@@ -54,6 +54,7 @@ var styles = StyleSheet.create({
 	},
 	linkTitle: {
 		paddingBottom: 12,
+		fontSize: 20,
 		paddingTop: 0,
 		fontWeight: 'bold'
 	},

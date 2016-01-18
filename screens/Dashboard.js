@@ -15,7 +15,6 @@ import Header from '../components/Header';
 import DrawerLayout from 'react-native-drawer-layout';
 import SidebarNav from '../components/SidebarNav';
 
-
 class Dashboard extends React.Component {
   constructor(props) {
     super(props);
@@ -57,16 +56,23 @@ class Dashboard extends React.Component {
         <View style={styles.contentContainer}>
           <Header onToggleDraw={this.openDrawer.bind(this)} title="Hanzi Gold" />
           <View style={styles.statsContainer}>
-            <Text style={{flex: 3, marginTop: 15, fontSize: 40, color: '#666', alignSelf: 'center'}}>{points}</Text>
-            <View style={{flex: 1, marginBottom: 0, flexDirection: 'row', justifyContent: 'space-around'}}>
-              <Text>Learnt: {wordsLearnt}</Text>
-              <Text>Correct: {correct}</Text>
-              <Text>Incorrect: {wrong}</Text>
+            <Text style={{flex: 2, marginTop: 15, fontWeight: "bold", fontSize: 44, color: Colors.BLACK, alignSelf: 'center'}}>{points}</Text>
+            <View style={{flex: 1, marginRight: 15, marginLeft: 15, marginBottom: 10, flexDirection: 'row', justifyContent: 'space-around'}}>
+              <Text style={{fontSize: 18}}>Learnt: {wordsLearnt}</Text>
+              <Text style={{fontSize: 18}}>Correct: {correct}</Text>
+              <Text style={{fontSize: 18}}>Incorrect: {wrong}</Text>
             </View>
           </View>
           <View style={styles.learnContainer}>
             <View style={styles.currentDeckWrapper}>
-              <CurrentDeck cards={cardsInDeck} />
+              <View style={{marginLeft: 35, marginTop: 25}}>
+                <Text style={{fontSize: 18, marginBottom: 15, fontWeight: "bold"}}>
+                  Next Hanzi to learn
+                </Text>
+              </View>
+              <View style={{flex: 1, marginLeft: 15}}>
+                <CurrentDeck cards={cardsInDeck} />
+              </View>
             </View>
             <View style={styles.learnButtonWrapper}>
               <Button onPress={this.learn.bind(this)}>Learn</Button>
