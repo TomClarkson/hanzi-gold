@@ -1,5 +1,5 @@
 import React, { 
-	Component, Image, AsyncStorage, StyleSheet, View, Text, TextInput, TouchableHighlight
+	Component, Image, AsyncStorage, StyleSheet, View, Text, TextInput, TouchableHighlight, Platform
 } from 'react-native';
 
 import SlideWrapper from '../animation/SlideWrapper';
@@ -14,22 +14,10 @@ import GoBackHeader from '../components/GoBackHeader';
 import Button from '../components/Button';
 
 class Learn extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      activeIndex: 0
-    };
-  }
   componentDidMount() {
-    // AsyncStorage.removeItem('user');
     this.props.dispatch(loadDeck(5));
   }
-  tr() {
-    this.setState({activeIndex: this.state.activeIndex + 1});
-  }
   markAsStudied() {
-    console.log('time ', markCardAsStudied)
-
     let {currentCard, cards, dispatch} = this.props;
     dispatch(markCardAsStudied(currentCard, cards));
   }
@@ -102,7 +90,7 @@ var studyViewStyle = {
   },
   hanziHeaderText: {
     fontSize: 35,
-    marginBottom: 10,
+    marginBottom: 5,
     fontWeight: "bold"
   },
   englishHeaderText: {
@@ -121,7 +109,7 @@ var studyViewStyle = {
   },
   descriptionText: {
     fontSize: 18,
-    lineHeight: 28
+    lineHeight: 30
   },
   image: {  
     height: 200,
@@ -149,7 +137,9 @@ const StudyView = ({id, english, hanzi, description, image, markAsStudied}) => {
         <Image style={studyViewStyle.image} source={{uri:image}} />        
       </View>
       <View style={studyViewStyle.description}>
-        <Text style={studyViewStyle.descriptionText}>{description}</Text>
+        <Text style={
+          [studyViewStyle.descriptionText, description.length > 200 ? {fontSize: 16, lineHeight: 24} : {}]
+        }>{description}</Text>
       </View>
       <View style={studyViewStyle.confirmButtonContainer}>
         <Button onPress={markAsStudied}>Got it!</Button>
@@ -174,18 +164,10 @@ class QuestionView extends React.Component {
     var {answer} = this.state;
 
     if(answer == english) {
-      if(leitnerBox == 4) {
-        this.setState({completed: true});
-        setTimeout(() => {
-          dispatch(
-            markCorrect(currentCard, cards, answer, {id: null, type: 'TYPE_MEANING'})
-          );
-        }, 2000);
-      } else {
-        dispatch(
-          markCorrect(currentCard, cards, answer, {id: null, type: 'TYPE_MEANING'})
-        );
-      }
+      this.setState({answer: '', completed: true});
+      dispatch(
+        markCorrect(currentCard, cards, answer, {id: null, type: 'TYPE_MEANING'})
+      );
       dispatch(updatePoints(points + 1));
     } else {
       this.setState({wrong: true});
@@ -204,9 +186,11 @@ class QuestionView extends React.Component {
     var isWrong = this.state.wrong;
     var baseInputStyle = {height: 35};
 
+    var keyBoardHeight = Platform.OS === 'ios' ? 300 : 400;
+
     return (
       <View style={studyViewStyle.itemContainer}>
-        <View style={{height: Dimensions.get('window').height * 0.6}}>
+        <View style={{height: Dimensions.get('window').height - keyBoardHeight}}>
           <View style={[{flex: 0.5}, studyViewStyle.hanziHeader]}>
             <Text style={{fontSize: 50}}>{hanzi}</Text>
           </View>
@@ -222,8 +206,8 @@ class QuestionView extends React.Component {
                     backgroundColor: Colors.RED,
                     flexDirection: 'column'
                   }}>
-                    <Text style={{color: '#fff', textDecorationLine: 'line-through'}}>{this.state.answer}</Text>
-                    <Text>{this.props.english}</Text>
+                    <Text style={{color: '#fff', fontSize: 20, textDecorationLine: 'line-through'}}>{this.state.answer}</Text>
+                    <Text style={{fontSize: 20}}>{this.props.english}</Text>
                   </View>
                 }
               </Motion>
@@ -244,9 +228,8 @@ class QuestionView extends React.Component {
                     autoFocus={true}
                     placeholder="Enter english meaning"
                     onChangeText={(answer) => this.setState({answer})}
-                    onEndEditing={this.answer.bind(this)}
+                    onSubmitEditing={this.answer.bind(this)}
                     value={answer} />
-
                 </View>
               </View>
             }
@@ -257,24 +240,6 @@ class QuestionView extends React.Component {
   }
 }
 
-// <View style={{
-//   height: 40, 
-//   borderColor: '#eee', 
-//   padding: 20, 
-//   borderRadius: 5, 
-//   justifyContent: 'center',
-//   alignItems: 'center',
-//   borderWidth: 2}}>
-//   <TextInput
-//     underlineColorAndroid='rgba(0,0,0,0)'
-//     autoCorrect={false}
-//     autoCapitalize="none"
-//     autoFocus={true}
-//     placeholder="Enter english meaning"
-//     onChangeText={(answer) => this.setState({answer})}
-//     onEndEditing={this.answer.bind(this)}
-//     value={answer} />
-// </View>
 export default connect(state => ({
   currentCard: state.deck.currentCard,
   cards: state.deck.cards,
