@@ -23,7 +23,7 @@ export default function({leitnerBox}) {
   // array methods not available in android
   // var range = Array.from(Array(leitnerBox).keys());
 
-  var range = leitnerBoxToRange[leitnerBox +1];
+  var range = leitnerBoxToRange[leitnerBox -1];
 
   var boxes = range.map(index => 
     <View 
