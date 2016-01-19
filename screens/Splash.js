@@ -19,35 +19,37 @@ class NewSplash extends React.Component {
 	  			if(!user) {
 	  				this.props.navigator.push(ExRouter.getLoginRoute());
 	  			} else {
-	  				this.props.dispatch(loadUser(user));
+	  				this.props.navigator.push(ExRouter.getLoginRoute());
+	  				
+	  				// this.props.dispatch(loadUser(user));
 	  				// this.props.navigator.push(ExRouter.getDashboardRoute());
-	  				this.props.navigator.push(ExRouter.getOnboardingRoute());
+	  				// this.props.navigator.push(ExRouter.getOnboardingRoute());
 	  			}
 	  		});
 		}, 1000);
 	}
 	render() {
 		return (
-		<Image 
-		  resizeMode={Image.resizeMode.cover}      
-		  source={{uri: backgroundImage}}
-		  style={styles.container}>
-		  <Motion defaultStyle={{scale: 0.4, opacity: 0}} style={{scale: spring(1, [200, 17]), opacity: spring(1)}}>
-		  {m => 
-		    <View style={{
-		      opacity: m.opacity, 
-		      alignItems: 'center',
-		      justifyContent: 'center',
-		      height: 400,
-		    }}>
-		      <Image style={{width: 175, height: 200, transform: [{scale: m.scale}]}} source={{uri: strokeLogo }} />
-		      <View>
-		        <Text style={styles.logoTextContainer}>Hanzi Gold</Text>
-		      </View>
-		    </View>
-		  }
-		  </Motion>
-		</Image>
+			<Image 
+			  resizeMode={Image.resizeMode.cover}      
+			  source={{uri: backgroundImage}}
+			  style={styles.container}>
+			  <Motion defaultStyle={{scale: 0.4, opacity: 0}} style={{scale: spring(1, [200, 17]), opacity: spring(1)}}>
+			  {m => 
+			    <View style={{
+			      opacity: m.opacity, 
+			      alignItems: 'center',
+			      justifyContent: 'center',
+			      height: 400,
+			    }}>
+			      <Image style={{width: 175, height: 200, transform: [{scale: m.scale}]}} source={{uri: strokeLogo }} />
+			      <View>
+			        <Text style={styles.logoTextContainer}>Hanzi Gold</Text>
+			      </View>
+			    </View>
+			  }
+			  </Motion>
+			</Image>
 		);
 	}
 }
