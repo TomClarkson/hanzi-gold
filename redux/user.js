@@ -2,16 +2,26 @@
 
 var initialState = {
   username: '',
-  points: 0
+  points: 0,
+  wordsLearnt: 0,
+  correct: 0,
+  wrong: 0,
 };
 
 export default function(state = initialState, action) {
+  console.log('initialState', state);
 	switch (action.type) {
 		case 'LOAD_USER':
-	    	return action.user;
+	    	return Object.assign({}, state, action.user);
+    case 'UPDATE_DECK':
+      var {cards} = action;
+      var wordsLearnt = cards.filter(c => c.leitnerBox == 5).length;
+      return Object.assign({}, state, {wordsLearnt});
     case 'UPDATE_POINTS':
       var {points} = action;
-      return Object.assign({}, state, {points});
+      // @Todo decouple points from correct and wrong
+      var correctStats = points > state.points ? {correct: state.correct + 1} : {wrong: state.wrong + 1};
+      return Object.assign({}, state, correctStats, {points});
   	default:
     	return state
   }

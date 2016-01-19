@@ -25,12 +25,12 @@ class Dashboard extends React.Component {
   }
   componentDidMount() {
     this.props.dispatch(loadDeck(5)); 
-    getCards().then(cards => {
-      this.setState({cards});
-    });
-    getAttempts().then(attempts => {
-     this.setState({attempts});
-    });
+    // getCards().then(cards => {
+    //   this.setState({cards});
+    // });
+    // getAttempts().then(attempts => {
+    //  this.setState({attempts});
+    // });
   }
   learn() {
     this.props.navigator.push(ExRouter.getLearnRoute());
@@ -42,11 +42,8 @@ class Dashboard extends React.Component {
     this.drawer.closeDrawer();
   }
   render() {
-    let {cardsInDeck, points, username, navigator} = this.props;
+    let {cardsInDeck, points, wordsLearnt, correct, wrong, username, navigator} = this.props;
     let {cards} = this.state;
-    var correct = cards.reduce((acc,c) => acc + c.correct, 0);
-    var wrong = cards.reduce((acc,c) => acc + c.wrong, 0);
-    var wordsLearnt = cards.filter(c => c.leitnerBox == 5).length;
 
     return (
       <DrawerLayout
@@ -88,7 +85,10 @@ export default connect(state => ({
   cardsInDeck: state.deck.cards,
   allCardsCompleted: state.deck.allCardsCompleted,
   username: state.user.username,
-  points: state.user.points
+  points: state.user.points,
+  correct: state.user.correct,
+  wrong: state.user.wrong,
+  wordsLearnt: state.user.wordsLearnt
 }))(Dashboard);
 
 var styles = StyleSheet.create({
