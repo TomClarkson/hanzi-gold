@@ -55,7 +55,7 @@ class Login extends Component {
 		    	    	<TextInput
 		    	    	  style={[styles.input, styles.greyFont]}
 		    	    	  underlineColorAndroid='rgba(0,0,0,0)'
-		    	    	  placeholder='Username'
+		    	    	  placeholder='Enter your name'
 		    	    	  value={this.state.username}
 		    	    	  onChangeText={this.handleChange.bind(this)}
 		    	    	  onSubmitEditing={this.onSignIn.bind(this)}
