@@ -33,16 +33,14 @@ export function getAttempts() {
 }
 
 
-// export function saveCard(card) {
-// 	if(process.env.NODE_ENV == 'test') return;
+export function saveCard(card) {
+	getCards().then(cards => {
+		var hasCard = !! cards.find(c => c.id == card.id);
+		var newCards = !hasCard ? cards.concat([card]) : cards.map(c => c.id == card.id ? card : c);
 
-// 	getCards().then(cards => {
-// 		var hasCard = !! cards.find(c => c.id == card.id);
-// 		var newCards = !hasCard ? cards.concat([card]) : cards.map(c => c.id == card.id ? card : c);
-
-// 		localStorage.setItem('cards', JSON.stringify(newCards));
-// 	});
-// }
+		AsyncStorage.setItem('cards', JSON.stringify(newCards));
+	});
+}
 
 // export function getUser() {
 // 	return new Promise((resolve, reject) => {

@@ -49,12 +49,12 @@ const ExRouter = {
   getHomeRoute() {
     return {
       getSceneClass() {
-        // return Splash;
+        return Splash;
         // return Dashboard;
         // return Login;
       // return Onboarding;
         // return Learn;
-        return CharacterList;
+        // return CharacterList;
       }
     };
   },
@@ -94,7 +94,7 @@ const ExRouter = {
        return CharacterDetail;
       },
       configureScene() {
-        return ExNavigator.SceneConfigs.ZoomFromFront;
+        return ExNavigator.SceneConfigs.FloatFromRight;
       }
     }; 
   }

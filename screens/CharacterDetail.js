@@ -1,5 +1,5 @@
 import React, { 
-	Component, Image, AsyncStorage, StyleSheet, View, Text, TextInput, TouchableHighlight
+  Component, Image, AsyncStorage, StyleSheet, ScrollView, View, Text, TextInput, TouchableHighlight
 } from 'react-native';
 import { connect } from 'react-redux/native';
 import Colors from 'Colors';
@@ -7,33 +7,81 @@ import Dimensions from 'Dimensions';
 import ExNavigator from '@exponent/react-native-navigator';
 import ExRouter from 'ExRouter';
 import getCardsToStudy from '../domain/getCardsToStudy';
-import { getCards, getAttempts } from 'Storage';
-import { loadDeck } from '../redux/deck';
+import { getCards } from 'Storage';
 import CurrentDeck from '../components/CurrentDeck';
-import Button from '../components/Button';
+import CharacterList from '../components/CharacterList';
 import Header from '../components/Header';
 import DrawerLayout from 'react-native-drawer-layout';
 import SidebarNav from '../components/SidebarNav';
+import makeCard from '../domain/makeCard';
+import characters from 'Characters';
+import GoBackHeader from '../components/GoBackHeader';
 
-class CharacterList extends React.Component {
+var studyViewStyle = {
+  itemContainer: {
+    height: Dimensions.get('window').height - 110,
+    width: Dimensions.get('window').width - 40,
+    backgroundColor: Colors.WHITE,
+    borderRadius: 5,
+    borderWidth: 0,
+    padding: 15,
+    marginLeft: 15,
+    marginTop: 15
+  },
+  englishHeader: {
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  hanziHeader: {
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  headerText: {
+    fontSize: 28,
+    marginBottom: 10,
+    fontWeight: "bold"
+  },
+  hanziHeaderText: {
+    fontSize: 35,
+    marginBottom: 5,
+    fontWeight: "bold"
+  },
+  englishHeaderText: {
+    fontSize: 25,
+    marginBottom: 5,
+    fontWeight: "bold"
+  },
+  imageContainer: {
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  description: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  descriptionText: {
+    fontSize: 18,
+    lineHeight: 30
+  },
+  image: {  
+    height: 200,
+    width: 250,
+  },
+  confirmButtonContainer: {
+
+  },
+  confirmButton: {
+
+  }
+};
+
+class CharacterDetail extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      cards: [],
-      attempts: []
+      cards: []    
     };
-  }
-  componentDidMount() {
-    this.props.dispatch(loadDeck(5)); 
-    getCards().then(cards => {
-      this.setState({cards});
-    });
-    getAttempts().then(attempts => {
-     this.setState({attempts});
-    });
-  }
-  learn() {
-    this.props.navigator.push(ExRouter.getLearnRoute());
   }
   openDrawer() {
     this.drawer.openDrawer();
@@ -42,98 +90,50 @@ class CharacterList extends React.Component {
     this.drawer.closeDrawer();
   }
   render() {
-    console.log('PROPS', this.props);
-    let {cardsInDeck, points, username, navigator} = this.props;
-    let {cards} = this.state;
-    var correct = cards.reduce((acc,c) => acc + c.correct, 0);
-    var wrong = cards.reduce((acc,c) => acc + c.wrong, 0);
-    var wordsLearnt = cards.filter(c => c.leitnerBox == 5).length;
+    let {navigator, dispatch, characterId} = this.props;
 
-    return (
-      <DrawerLayout
-        ref={(drawer) => { return this.drawer = drawer }}
-        drawerWidth={310}
-        renderNavigationView={() => <SidebarNav navigator={navigator} onToggleDraw={this.closeDrawer.bind(this)} />}>
-        <View style={styles.contentContainer}>
-          <Header onToggleDraw={this.openDrawer.bind(this)} title="All Characters" />
-          <View style={styles.statsContainer}>
-            <Text style={{flex: 2, marginTop: 15, fontWeight: "bold", fontSize: 44, color: Colors.BLACK, alignSelf: 'center'}}>
-              Character Detail
-            </Text>
-            <View style={{flex: 1, marginRight: 15, marginLeft: 15, marginBottom: 10, flexDirection: 'row', justifyContent: 'space-around'}}>
-              <Text style={{fontSize: 18}}>Learnt: {wordsLearnt}</Text>
-              <Text style={{fontSize: 18}}>Correct: {correct}</Text>
-              <Text style={{fontSize: 18}}>Incorrect: {wrong}</Text>
+    console.log(
+      characters.find(c => c.id == characterId)
+    );
+
+    let character = characters.find(c => c.id == characterId);
+    
+    let {english, hanzi, image, description} = character;
+
+    return (        
+      <View style={styles.container}>
+        <GoBackHeader navigator={navigator} />
+        <View style={styles.container}>
+          <View style={studyViewStyle.itemContainer}>
+            <View style={studyViewStyle.englishHeader}>
+              <Text style={studyViewStyle.englishHeaderText}>{english}</Text>    
             </View>
-          </View>
-          <View style={styles.learnContainer}>
-            <View style={styles.currentDeckWrapper}>
-              <View style={{marginLeft: 35, marginTop: 25}}>
-                <Text style={{fontSize: 18, marginBottom: 15, fontWeight: "bold"}}>
-                  Next Hanzi to learn
-                </Text>
-              </View>
-              <View style={{flex: 1, marginLeft: 15}}>
-                <CurrentDeck cards={cardsInDeck} />
-              </View>
+            <View style={studyViewStyle.hanziHeader}>
+              <Text style={studyViewStyle.hanziHeaderText}>{hanzi}</Text>
             </View>
-            <View style={styles.learnButtonWrapper}>
-              <Button onPress={this.learn.bind(this)}>Learn</Button>
+            <View style={studyViewStyle.imageContainer}>
+              <Image style={studyViewStyle.image} source={{uri:image}} />        
             </View>
+            <View style={studyViewStyle.description}>
+              <Text style={
+                [studyViewStyle.descriptionText, description.length > 200 ? {fontSize: 16, lineHeight: 24} : {}]
+              }>{description}</Text>
+            </View>            
           </View>
         </View>
-      </DrawerLayout>
+      </View>
     );
   }
 }
 
 export default connect(state => ({
-  cardsInDeck: state.deck.cards,
-  allCardsCompleted: state.deck.allCardsCompleted,
-  username: state.user.username,
-  points: state.user.points
-}))(CharacterList);
+  characterId: state.characterDetail.activeId,
+  state: state
+}))(CharacterDetail);
 
 var styles = StyleSheet.create({
-  contentContainer: {
+  container: {
     flex: 1,
-    backgroundColor: Colors.GREY_BG,
-    flexDirection: 'column'
-  },
-  header: {
-    height: 70,
-    paddingTop: 10,
-    backgroundColor: Colors.GOLD,
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
-  headerText: {
-    color: Colors.WHITE,
-    fontSize: 22,
-    fontWeight: "bold"
-  },
-  statsContainer: {
-    flex: 0.2,
-    margin: 15,
-    backgroundColor: '#fff',
-    borderRadius: 5,
-    flexDirection: 'column'
-  },
-  learnContainer: {
-    flex: 0.8,
-    marginLeft: 15,
-    marginRight: 15,
-    marginBottom: 15,
-    backgroundColor: '#fff',
-    borderRadius: 5
-  },
-  currentDeckWrapper: {
-    flex: 0.8
-  },
-  learnButtonWrapper: {
-    marginLeft: 30,
-    marginRight: 30,
-    flex: 0.2,
-    marginTop: 15
+    backgroundColor: Colors.GREY_BG
   }
 }); 

@@ -1,20 +1,19 @@
 var initialState = {
-  activeIndex: null,
   activeId: null
 };
 
 export default function(state = initialState, action) {
 	switch (action.type) {
 		case 'LOAD_CHARACTER':
-	    return action.characterIdAndIndex;
+	    return Object.assign({}, state, {activeId: action.characterId})
   	default:
     	return state
   }
 }
 
-export function loadCharacter(characterIdAndIndex) {
+export function loadCharacter(characterId) {
   return {
-    type: 'LOAD_CHARACTER', characterIdAndIndex
+    type: 'LOAD_CHARACTER', characterId
   };
 }
 

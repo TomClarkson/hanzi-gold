@@ -9,7 +9,6 @@ var initialState = {
 };
 
 export default function(state = initialState, action) {
-  console.log('initialState', state);
 	switch (action.type) {
 		case 'LOAD_USER':
 	    	return Object.assign({}, state, action.user);

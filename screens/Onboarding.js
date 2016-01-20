@@ -38,8 +38,10 @@ class Onboarding extends React.Component {
           <View style={styles.statsContainer}>
             <Text style={styles.leadText}>Hi {username}, Welcome to Hanzi Gold!</Text>
             <Text style={styles.secondText}>Our learn mode will guide you through hanzi with memorable descriptions.</Text> 
-            <Text style={styles.secondText}>After seeing the description you will be tested and with each correct answer you will gain points and increase word strength.</Text>
-            <Text style={styles.secondText}>Open the menu in the top left to find other learning modes.</Text>
+            <Text style={styles.secondText}>
+              After seeing the description you will be tested, and if you answer correctly, you will gain points and increase word strength.
+              However, beware, if you answer incorrectly your word strength will be lost.
+            </Text>
             <View style={{margin: 25}}>
               <Button onPress={this.learn.bind(this)}>Start Learning!</Button>
             </View>
@@ -89,7 +91,7 @@ var styles = StyleSheet.create({
     marginRight: 25,
     marginTop: 10,
     marginBottom: 10,
-    fontSize: 18,
+    fontSize: 22,
   },
   statsContainer: {
     flex: 0.2,

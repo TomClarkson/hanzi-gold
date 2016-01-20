@@ -3,28 +3,31 @@ import React, {
 } from 'react-native';
 import moment from 'moment';
 import LeitnerBox from './LeitnerBox';
+import { loadCharacter } from '../redux/characterDetail';
+import ExRouter from 'ExRouter';
 
 export default class CharacterList extends Component {
+  goToCharacter(characterId) {
+    
+    this.props.dispatch(loadCharacter(characterId));
+    this.props.navigator.push(ExRouter.getCharacterDetailRoute());
+  }
   render() {
     let {cards} = this.props;
     
     return (
       <View style={styles.container}>
-        <View style={styles.rowWrapper} key={-1}>
-          <Text style={[styles.headerText, styles.quarterGrid]}>Word</Text>
-          <Text style={[styles.headerText, styles.quarterGrid]}>Hanzi</Text> 
-          <Text style={[styles.headerText, styles.quarterGrid]}>Level</Text>
-          <Text style={[styles.headerText, styles.quarterGrid]}>Detail</Text> 
-        </View>
         {cards.map(c =>
-         <View style={styles.rowWrapper} key={c.id}>
-          <Text style={[styles.englishText, styles.quarterGrid]}>{c.english}</Text>
-          <Text style={[styles.hanziText, styles.quarterGrid]}>{c.hanzi}</Text> 
-          <View style={styles.quarterGrid}>
-            <LeitnerBox leitnerBox={c.leitnerBox} />
-          </View>
-          <Text style={[styles.headerText, styles.quarterGrid]}>-></Text>
-         </View>
+          <TouchableHighlight onPress={this.goToCharacter.bind(this, c.id)} key={c.id}>
+           <View style={styles.rowWrapper} key={c.id}>
+            <View style={styles.hanziColumn}>
+              <Text style={styles.hanziText}>{c.hanzi}</Text> 
+            </View>
+            <View style={{flex: 0.6}}>
+              <Text style={{fontSize: 26}}>{c.english}</Text>
+            </View>
+           </View>
+          </TouchableHighlight>
         )}
       </View>
     );
@@ -40,14 +43,22 @@ var styles = StyleSheet.create({
   },
   rowWrapper: {
     flex: 1, 
-    marginLeft: 20, 
-    marginRight: 20, 
+    marginLeft: 20,
+    marginRight: 20,
+    marginTop: 20,
     flexDirection: 'row', 
+    padding: 20,
+    backgroundColor: '#fff',
+    borderWidth: 0,
+    borderRadius: 5
+  },
+  hanziColumn: {
+    flex: 0.3,
     alignItems: 'center', 
-    justifyContent: 'space-around'
+    justifyContent: 'center'
   },
   hanziText: {
-    fontSize: 24,
+    fontSize: 34,
   },
   englishText: {
     fontSize: 22,

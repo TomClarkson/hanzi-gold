@@ -1,5 +1,5 @@
 import moment from 'moment';
-// import * as Storage from '../storage';
+import { saveCard } from 'Storage';
 import getCardsToStudy from '../domain/getCardsToStudy';
 import lietnerBoxIntervals from 'LietnerBoxIntervals';
 import makeAttempt from '../domain/makeAttempt';
@@ -35,7 +35,7 @@ export function loadDeck(numCards) {
 }
 
 function updateDeck(updatedCard, cards, dispatch) {
-  // Storage.saveCard(updatedCard);
+  saveCard(updatedCard);
 
   var newCardsSorted = cards
     .map(c => c.id == updatedCard.id ? updatedCard : c)
