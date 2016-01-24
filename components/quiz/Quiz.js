@@ -33,12 +33,13 @@ export default class Quiz extends Component {
     var { title, choices } = question;
     return (
       <View style={styles.container}>
-        <View>
+        <View style={styles.questionWrapper}>
           <View><Text>{title}</Text></View>
         </View>
-        <View>
-        {choices.map(c => 
+        <View style={styles.choicesWrapper}>
+        {choices.map((c, index) => 
           <Choice key={c.id} 
+            isFirst={index == 0}
             choice={c} 
             onSelectChoice={this.handleSelectChoice.bind(this)} />  
         )}
@@ -52,7 +53,16 @@ var styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    justifyContent: 'center',
-    alignItems: 'center'
+    flexDirection: 'column',
   },
+  questionWrapper: {
+    backgroundColor: '#eee',
+    flex: 0.2,
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  choicesWrapper: {
+    flex: 0.8,
+    flexDirection: 'column',
+  }
 });

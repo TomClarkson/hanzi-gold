@@ -9,23 +9,32 @@ export default class Choice extends Component {
     );
   }
   render() {
-    let {title} = this.props;
+    let {choice, isFirst} = this.props;
+    let topMarginStyle = isFirst ? {marginTop: 20} : {};
+
     return (
-      <View style={styles.container}>
-        <TouchableOpacity style={styles.choiceButton} onPress={this.handlePress.bind(this)}>
-            <Text>Choice</Text>
-        </TouchableOpacity>
-      </View>
+      <TouchableOpacity style={[styles.choiceButton, topMarginStyle]} onPress={this.handlePress.bind(this)}>
+          <Text style={styles.choiceText}>{choice.title}</Text>
+      </TouchableOpacity>
     );
   }
 }
 
 var styles = StyleSheet.create({
   choiceButton: {
-    backgroundColor: 'yellow',
+    backgroundColor: '#FFF',
     padding: 20,
+    justifyContent: 'center',
     alignItems: 'center',
-    borderWidth: 0,
-    borderRadius: 8
+    borderColor: '#E1EEF3',
+    borderWidth: 2,
+    borderRadius: 5,
+    flex: 1,
+    marginBottom: 20,
+    marginLeft: 20,
+    marginRight: 20
   },
+  choiceText: {
+    color: '#333'
+  }
 });
