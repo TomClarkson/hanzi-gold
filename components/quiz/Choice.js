@@ -4,13 +4,15 @@ import React, {
 
 export default class Choice extends Component {
   handlePress(e) {
-    console.log('handling press in choice component', e);
+    this.props.onSelectChoice(
+      this.props.choice.id
+    );
   }
   render() {
-    let {onSelectChoice} = this.props;
+    let {title} = this.props;
     return (
       <View style={styles.container}>
-        <TouchableOpacity style={styles.choiceButton} onPress={onSelectChoice}>
+        <TouchableOpacity style={styles.choiceButton} onPress={this.handlePress.bind(this)}>
             <Text>Choice</Text>
         </TouchableOpacity>
       </View>

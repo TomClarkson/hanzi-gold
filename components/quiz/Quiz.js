@@ -3,14 +3,23 @@ import React, {
 } from 'react-native';
 import Choice from './Choice';
 
+var question = {
+  choices: [
+    {
+      id: 1,
+      title: 'one'
+    }
+  ]
+}
+
 export default class Quiz extends Component {
-  handleSelectChoice(e) {
-    console.log('handling press from choice', e);
+  handleSelectChoice(id) {
+    console.log('selected choice id', id);
   }
   render() {
     return (
       <View style={styles.container}>
-        <Choice onSelectChoice={this.handleSelectChoice.bind(this)} />
+        <Choice key={question.choices[0].id} choice={question.choices[0]} onSelectChoice={this.handleSelectChoice.bind(this)} />
       </View>
     );
   }
