@@ -4,6 +4,10 @@ import React, {
 import Choice from './Choice';
 import Results from './Results';
 import allCharacters from 'Characters';
+import Colors from 'Colors';
+import GoBackHeader from '../GoBackHeader';
+import SlideWrapper from '../../animation/SlideWrapper';
+import Dimensions from 'Dimensions';
 
 let getRandomCharacter = (characters) => 
   characters[Math.floor(Math.random() * characters.length)];
@@ -60,33 +64,54 @@ export default class Quiz extends Component {
     question.wasCorrect = choiceId == question.correctChoiceId;
 
     this.setState({questions});
-    this.setState({activeIndex: this.state.activeIndex + 1});
+    setTimeout(() => {
+      this.setState({activeIndex: this.state.activeIndex + 1});
+    }, 500);
   }
-  render() {
+  getSlideForQuestion() {
     var isOver = this.state.activeIndex == this.state.questions.length;
 
     if(isOver) {
-      return (
+      var component = (
         <Results questions={this.state.questions} />
       );
+
+      return {id: -1, component, height: 590};
     }
 
     var question = this.state.questions[this.state.activeIndex];
-
     var { title, choices } = question;
-    return (
-      <View style={styles.container}>
+
+    var component = (
+      <View style={styles.itemContainer}>
         <View style={styles.questionWrapper}>
-          <View><Text>{title}</Text></View>
+          <View><Text style={styles.questionText}>{title}</Text></View>
         </View>
         <View style={styles.choicesWrapper}>
         {choices.map((c, index) => 
           <Choice key={c.id} 
             isFirst={index == 0}
             choice={c} 
+            question={question}
             onSelectChoice={this.handleSelectChoice.bind(this)} />  
         )}
         </View>
+      </View>
+    );
+
+    return {id: question.id, component, height: 590};
+  }
+  render() {
+    let { navigator } = this.props;
+
+    var item = this.getSlideForQuestion();
+
+    return (
+      <View style={styles.container}>
+        <GoBackHeader navigator={navigator} />
+        <View style={{flex: 1, padding: 20}}>
+          <SlideWrapper item={item} />
+        </View>        
       </View>
     );
   }
@@ -95,14 +120,25 @@ export default class Quiz extends Component {
 var styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: Colors.GREY_BG,
     flexDirection: 'column',
   },
+  itemContainer: {
+    height: Dimensions.get('window').height - 110,
+    width: Dimensions.get('window').width - 40,
+    backgroundColor: Colors.WHITE,
+    borderRadius: 5,
+    borderWidth: 0,
+  },
   questionWrapper: {
-    backgroundColor: '#eee',
+    backgroundColor: Colors.GOLD,
     flex: 0.2,
     alignItems: 'center',
     justifyContent: 'center'
+  },
+  questionText: {
+    fontSize: 30,
+    fontWeight: '600'
   },
   choicesWrapper: {
     flex: 0.8,
