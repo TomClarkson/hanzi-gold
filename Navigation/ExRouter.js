@@ -20,6 +20,7 @@ import Learn from '../screens/Learn';
 import Onboarding from '../screens/Onboarding';
 import CharacterList from '../screens/CharacterList';
 import CharacterDetail from '../screens/CharacterDetail';
+import Quiz from '../screens/Quiz';
 
 const ExRouter = {
   getLoginRoute() {
@@ -92,6 +93,16 @@ const ExRouter = {
     return {
       getSceneClass(navigator) {
        return CharacterDetail;
+      },
+      configureScene() {
+        return ExNavigator.SceneConfigs.FloatFromRight;
+      }
+    }; 
+  },
+  getQuizModeRoute() {
+    return {
+      getSceneClass(navigator) {
+       return Quiz;
       },
       configureScene() {
         return ExNavigator.SceneConfigs.FloatFromRight;
