@@ -42,6 +42,7 @@ class Onboarding extends React.Component {
               After seeing the description you will be tested, and if you answer correctly, you will gain points and increase word strength.
               However, beware, if you answer incorrectly your word strength will be lost.
             </Text>
+            <Text style={styles.secondText}>Open the menu in the top left for more learning modes.</Text> 
             <View style={{margin: 25}}>
               <Button onPress={this.learn.bind(this)}>Start Learning!</Button>
             </View>
