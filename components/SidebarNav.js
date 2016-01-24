@@ -18,6 +18,9 @@ export default class SidebarNav extends React.Component {
 	characterList() {
 	  this.props.navigator.push(ExRouter.getCharacterListRoute());
 	}
+	quizMode() {
+		this.props.navigator.push(ExRouter.getQuizModeRoute());	
+	}
 	render() {
 		let {onToggleDraw} = this.props;
 		// @Todo filter out current viewed route
@@ -35,6 +38,12 @@ export default class SidebarNav extends React.Component {
 			    	<View style={styles.linkContainer}>
 			  	  		<Text style={styles.linkTitle}>Learn mode</Text>
 			  	  		<Text style={styles.linkText}>Learn new words with spaced repetition</Text>
+			    	</View>
+			    </TouchableHighlight>
+			    <TouchableHighlight onPress={this.quizMode.bind(this)}>
+			    	<View style={styles.linkContainer}>
+			      		<Text style={styles.linkTitle}>Quiz Mode</Text>
+			      		<Text style={styles.linkText}>Test your knowledge our quiz</Text>
 			    	</View>
 			    </TouchableHighlight>
 				<TouchableHighlight onPress={this.characterList.bind(this)}>
