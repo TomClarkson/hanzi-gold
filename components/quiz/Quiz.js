@@ -2,34 +2,88 @@ import React, {
 	Component, StyleSheet, View, Text, TouchableOpacity
 } from 'react-native';
 import Choice from './Choice';
+import Results from './Results';
 
-var question = {
-  title: 'Question Title',
-  choices: [
+let getQuestions = () => {
+  return [
     {
-      id: 1,
-      title: 'one'
+      title: 'One plus one',
+      choices: [
+        {
+          id: 1,
+          title: 'one'
+        },
+        {
+          id: 2,
+          title: 'two'
+        },
+        {
+          id: 3,
+          title: 'three'
+        },
+        {
+          id: 4,
+          title: 'four'
+        }
+      ],
+      correctChoiceId: 2
     },
     {
-      id: 2,
-      title: 'two'
+      title: 'Two minus one',
+      choices: [
+        {
+          id: 1,
+          title: 'one'
+        },
+        {
+          id: 2,
+          title: 'two'
+        },
+        {
+          id: 3,
+          title: 'three'
+        },
+        {
+          id: 4,
+          title: 'four'
+        }
+      ],
+      correctChoiceId: 1
     },
-    {
-      id: 3,
-      title: 'three'
-    },
-    {
-      id: 4,
-      title: 'four'
-    }
-  ]
-}
+  ];
+};
+
 
 export default class Quiz extends Component {
-  handleSelectChoice(id) {
-    console.log('selected choice id', id);
+  constructor(props) {
+    super(props);
+
+    let questions = getQuestions();
+    this.state = {
+      activeIndex: 0,
+      questions
+    };
+  }
+  handleSelectChoice(choiceId) {
+    let {questions, activeIndex} = this.state;
+    let question = questions[activeIndex];
+    question.answer = choiceId;
+    question.wasCorrect = choiceId == question.correctChoiceId;
+
+    this.setState({questions});
+    this.setState({activeIndex: this.state.activeIndex + 1});
   }
   render() {
+    var isOver = this.state.activeIndex == this.state.questions.length;
+
+    if(isOver) {
+      return (
+        <Results questions={this.state.questions} />
+      );
+    }
+
+    var question = this.state.questions[this.state.activeIndex];
+
     var { title, choices } = question;
     return (
       <View style={styles.container}>
