@@ -4,10 +4,23 @@ import React, {
 import Choice from './Choice';
 
 var question = {
+  title: 'Question Title',
   choices: [
     {
       id: 1,
       title: 'one'
+    },
+    {
+      id: 2,
+      title: 'two'
+    },
+    {
+      id: 3,
+      title: 'three'
+    },
+    {
+      id: 4,
+      title: 'four'
     }
   ]
 }
@@ -17,9 +30,19 @@ export default class Quiz extends Component {
     console.log('selected choice id', id);
   }
   render() {
+    var { title, choices } = question;
     return (
       <View style={styles.container}>
-        <Choice key={question.choices[0].id} choice={question.choices[0]} onSelectChoice={this.handleSelectChoice.bind(this)} />
+        <View>
+          <View><Text>{title}</Text></View>
+        </View>
+        <View>
+        {choices.map(c => 
+          <Choice key={c.id} 
+            choice={c} 
+            onSelectChoice={this.handleSelectChoice.bind(this)} />  
+        )}
+        </View>
       </View>
     );
   }
