@@ -16,10 +16,11 @@ export default class Results extends Component {
           <View style={styles.headerRow}>
             <Text style={styles.headerRowText}>Question</Text>
             <Text style={styles.headerRowText}>Your answer</Text>
-            <Text style={styles.headerRowText}>Correct</Text>
+            <Text style={styles.headerRowText}>Correct Answer</Text>
           </View>
           <View>
             {questions.map((question, index) => {
+              // isQuestionInHanzi
               let correctChoice = question.choices.find(c => c.id == question.correctChoiceId);
               let usersChoice = question.choices.find(c => c.id == question.answer);
 

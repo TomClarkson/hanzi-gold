@@ -3,54 +3,42 @@ import React, {
 } from 'react-native';
 import Choice from './Choice';
 import Results from './Results';
+import allCharacters from 'Characters';
 
-let getQuestions = () => {
-  return [
-    {
-      title: 'One plus one',
-      choices: [
-        {
-          id: 1,
-          title: 'one'
-        },
-        {
-          id: 2,
-          title: 'two'
-        },
-        {
-          id: 3,
-          title: 'three'
-        },
-        {
-          id: 4,
-          title: 'four'
-        }
-      ],
-      correctChoiceId: 2
-    },
-    {
-      title: 'Two minus one',
-      choices: [
-        {
-          id: 1,
-          title: 'one'
-        },
-        {
-          id: 2,
-          title: 'two'
-        },
-        {
-          id: 3,
-          title: 'three'
-        },
-        {
-          id: 4,
-          title: 'four'
-        }
-      ],
-      correctChoiceId: 1
-    },
-  ];
+let getRandomCharacter = (characters) => 
+  characters[Math.floor(Math.random() * characters.length)];
+
+let getRandomCharacters = (limit, characters, randomCharacters = []) => {
+  var randomCharacter = getRandomCharacter(characters);
+
+  var randomCharacters = randomCharacters.concat([randomCharacter]);
+  if(randomCharacters.length == limit) {
+    return randomCharacters;
+  }
+
+  var characters = characters.filter(c => c.id != randomCharacter.id);
+  return getRandomCharacters(limit, characters, randomCharacters);
+}
+
+
+let makeQuestion = (characters, questionId) => {
+  var randomCharacters = getRandomCharacters(4, characters);
+  
+  var questionCharacter = getRandomCharacter(randomCharacters);
+
+  var isQuestionInHanzi = Math.random() > 0.5;
+  var choices = randomCharacters.map(c => ({
+    id: c.id,
+    title: isQuestionInHanzi ? c.english : c.hanzi 
+  }));
+
+  return {
+    id: questionId,
+    isQuestionInHanzi,
+    title: isQuestionInHanzi ? questionCharacter.hanzi : questionCharacter.english,
+    choices,
+    correctChoiceId: questionCharacter.id
+  };
 };
 
 
@@ -58,7 +46,8 @@ export default class Quiz extends Component {
   constructor(props) {
     super(props);
 
-    let questions = getQuestions();
+    let questions = [1, 2, 3, 4, 5].map(num => makeQuestion(allCharacters, num));
+
     this.state = {
       activeIndex: 0,
       questions
