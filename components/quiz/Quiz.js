@@ -102,16 +102,11 @@ export default class Quiz extends Component {
     return {id: question.id, component, height: 590};
   }
   render() {
-    let { navigator } = this.props;
-
     var item = this.getSlideForQuestion();
 
     return (
-      <View style={styles.container}>
-        <GoBackHeader navigator={navigator} />
-        <View style={{flex: 1, padding: 20}}>
-          <SlideWrapper item={item} />
-        </View>        
+      <View style={{flex: 1, padding: 20}}>
+        <SlideWrapper item={item} />
       </View>
     );
   }

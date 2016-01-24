@@ -50,12 +50,7 @@ const ExRouter = {
   getHomeRoute() {
     return {
       getSceneClass() {
-        return Quiz;
-        // return Dashboard;
-        // return Login;
-      // return Onboarding;
-        // return Learn;
-        // return CharacterList;
+        return Splash;
       }
     };
   },
