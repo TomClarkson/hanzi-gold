@@ -13,8 +13,10 @@ export default class Quiz extends Component {
 }
 
 var styles = StyleSheet.create({
-  contentContainer: {
+  container: {
     flex: 1,
     backgroundColor: '#fff',
+    justifyContent: 'center',
+    alignItems: 'center'
   }
 }); 

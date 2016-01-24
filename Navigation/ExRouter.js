@@ -50,7 +50,7 @@ const ExRouter = {
   getHomeRoute() {
     return {
       getSceneClass() {
-        return Splash;
+        return Quiz;
         // return Dashboard;
         // return Login;
       // return Onboarding;
