@@ -20,7 +20,9 @@ class NewSplash extends React.Component {
 	  				this.props.navigator.push(ExRouter.getLoginRoute());
 	  			} else {
 	  				this.props.navigator.push(ExRouter.getLoginRoute());
-	  				
+					
+					// when we want to load the user from async	storage on app load
+					// we will reinstate this code  				
 	  				// this.props.dispatch(loadUser(user));
 	  				// this.props.navigator.push(ExRouter.getDashboardRoute());
 	  				// this.props.navigator.push(ExRouter.getOnboardingRoute());
