@@ -12,6 +12,7 @@ import {updatePoints} from '../redux/user';
 import {Motion, spring} from 'react-motion/native';
 import GoBackHeader from '../components/GoBackHeader';
 import Button from '../components/Button';
+import CurrentDeck from '../components/CurrentDeck';
 
 class Learn extends React.Component {
   componentDidMount() {
@@ -22,6 +23,14 @@ class Learn extends React.Component {
     dispatch(markCardAsStudied(currentCard, cards));
   }
   getItemFromCard(card) {
+    if(this.props.allCardsCompleted) {
+      var component = (
+        <CompletedView />       
+      );
+
+      return {id: -1, component, height: 590};
+    }
+
     var character = characters.find(c => c.id == card.id);
     var id = card.id;
     if(card.lastAction == null || card.lastAction == 'WRONG') {
@@ -123,6 +132,25 @@ var studyViewStyle = {
   }
 };
 
+const CompletedView = ({id, english, hanzi, description, image, markAsStudied}) => {
+  let textStyle = {
+    fontSize: 20,
+    marginTop: 10,
+    marginBottom: 10
+  };
+
+  return (
+    <View style={{flex: 1}}>
+      <View style={studyViewStyle.itemContainer}>
+        <Text style={{fontSize: 30, margin: 15, textAlign: 'center', fontWeight: 'bold'}}>You win!</Text>
+        <Text style={textStyle}>You have learnt all of our characters</Text>
+        <Text style={textStyle}>Email tom@convoconnect.com with the code 01-HGEXPONENT-2016 and you will get our premium upgrades for free!</Text>
+        <Text style={textStyle}>We will email you when the next version of Hanzi Gold is released.</Text> 
+        <Text style={textStyle}>For more information visit hanzigold.com</Text> 
+      </View> 
+    </View>
+  );
+}
 
 const StudyView = ({id, english, hanzi, description, image, markAsStudied}) => {
   return (
@@ -241,6 +269,7 @@ class QuestionView extends React.Component {
 }
 
 export default connect(state => ({
+  allCardsCompleted: state.deck.allCardsCompleted,
   currentCard: state.deck.currentCard,
   cards: state.deck.cards,
   points: state.user.points

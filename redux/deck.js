@@ -6,6 +6,7 @@ import makeAttempt from '../domain/makeAttempt';
 
 var initialState = {
   cards: [],
+  allCardsCompleted: false,
   currentCard: null,
   lastCharacterId: null
 };
@@ -17,6 +18,10 @@ export default function(state = initialState, action) {
     		cards: action.cards,
     		currentCard: action.currentCard
     	});
+    case 'ALL_CARDS_COMPLETED':
+        return Object.assign({}, state, {
+          allCardsCompleted: true
+        });
   	default:
     	return state
   }
@@ -25,6 +30,9 @@ export default function(state = initialState, action) {
 export function loadDeck(numCards) {
   return dispatch => {
     getCardsToStudy(numCards).then(cardsToStudy => {
+      if(! cardsToStudy.length) {
+        dispatch({type: 'ALL_CARDS_COMPLETED'});
+      }
       dispatch({
         type: 'UPDATE_DECK', 
         cards: cardsToStudy, 
@@ -68,6 +76,7 @@ export function markCorrect(card, cards, userAnswer, question = {id: null, type:
     var nextReview = moment(card.nextReview).add(lietnerBoxIntervals[newLeitnerBox - 1], 'seconds');
     var updatedCard = Object.assign(card, {correct: card.correct + 1, nextReview, leitnerBox: newLeitnerBox, lastAction: 'CORRECT'});
 
+
     // Storage.saveAttempt({
     //   id: card.id,
     //   attemptedDevice: browser.name,
@@ -78,11 +87,21 @@ export function markCorrect(card, cards, userAnswer, question = {id: null, type:
 
     if(newLeitnerBox == 5) {
       getCardsToStudy(1, cards.map(c => c.id)).then(newCardsToStudy => {
-        var newCards = cards
-          .concat(newCardsToStudy)
-          .filter(c => c.id != updatedCard.id); 
+        console.log('newCardsToStudy', newCardsToStudy);
+        var currentCardsCompleted = cards.filter(c => c.leitnerBox != 5).length == 0;
+        if(! newCardsToStudy.length && currentCardsCompleted) {
+          console.log('made it', cards);
+          // needs to check that no cards exist that are not level 5
+          dispatch({type: 'ALL_CARDS_COMPLETED'});
+        } else {
+          var newCards = cards
+            .concat(newCardsToStudy)
+            .filter(c => c.id != updatedCard.id);   
+            updateDeck(updatedCard, newCards, dispatch);  
+        }
         
-        updateDeck(updatedCard, newCards, dispatch);  
+        
+        
       });
     } else {
       updateDeck(updatedCard, cards, dispatch); 

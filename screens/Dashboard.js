@@ -42,7 +42,7 @@ class Dashboard extends React.Component {
     this.drawer.closeDrawer();
   }
   render() {
-    let {cardsInDeck, points, wordsLearnt, correct, wrong, username, navigator} = this.props;
+    let {cardsInDeck, points, wordsLearnt, correct, wrong, username, allCardsCompleted, navigator} = this.props;
     let {cards} = this.state;
 
     return (
@@ -68,7 +68,10 @@ class Dashboard extends React.Component {
                 </Text>
               </View>
               <View style={{flex: 1, marginLeft: 15}}>
-                <CurrentDeck cards={cardsInDeck} />
+                {allCardsCompleted && (<Text>You have completed all Hanzi</Text>)}
+                {!allCardsCompleted && 
+                  <CurrentDeck cards={cardsInDeck} />
+                }
               </View>
             </View>
             <View style={styles.learnButtonWrapper}>
