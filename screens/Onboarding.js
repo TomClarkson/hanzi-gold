@@ -40,9 +40,8 @@ class Onboarding extends React.Component {
             <Text style={styles.secondText}>Our learn mode will guide you through hanzi with memorable descriptions.</Text> 
             <Text style={styles.secondText}>
               After seeing the description you will be tested, and if you answer correctly, you will gain points and increase word strength.
-              However, beware, if you answer incorrectly your word strength will be lost.
             </Text>
-            <Text style={styles.secondText}>Open the menu in the top left for more learning modes.</Text> 
+            <Text style={styles.secondText}>Open the menu in the top left for more modes to practise your Hanzi.</Text> 
             <View style={{margin: 25}}>
               <Button onPress={this.learn.bind(this)}>Start Learning!</Button>
             </View>
@@ -81,7 +80,7 @@ var styles = StyleSheet.create({
     textAlign: 'center',
     marginLeft: 25,
     marginRight: 25,
-    marginTop: 30,
+    marginTop: 20,
     marginBottom: 30,
     fontSize: 28,
     fontWeight: 'bold'
