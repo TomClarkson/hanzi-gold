@@ -44,7 +44,7 @@ class NewSplash extends React.Component {
 			      justifyContent: 'center',
 			      height: 400,
 			    }}>
-			      <Image style={{width: 175, height: 200, transform: [{scale: m.scale}]}} source={{uri: strokeLogo }} />
+			      <Image style={{width: 90, height: 100, transform: [{scale: m.scale}]}} source={{uri: strokeLogo }} />
 			      <View>
 			        <Text style={styles.logoTextContainer}>Hanzi Gold</Text>
 			      </View>
@@ -64,7 +64,7 @@ let styles = StyleSheet.create({
   },
   logoTextContainer: {
     color: '#fff',
-    fontSize: 60,
+    fontSize: 35,
     marginTop: 20,
     textAlign: 'center'
   }

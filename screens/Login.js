@@ -46,7 +46,7 @@ class Login extends Component {
 			    source={{uri: backgroundImage}}
 			    style={styles.container}>
 	    	    <View style={styles.header}>
-	    	        <Image style={{width: 175, height: 200}} source={{uri: strokeLogo}} />
+	    	        <Image style={{width: 90, height: 100}} source={{uri: strokeLogo}} />
 	    	        <Text style={styles.headerText}>Hanzi Gold</Text>
 	    	    </View>
 	    	    <View style={styles.loginFormContainer}>
@@ -88,7 +88,8 @@ const styles = StyleSheet.create({
   },
   headerText: {
     color: '#fff',
-    fontSize: 50
+    fontSize: 35,
+    marginTop: 20
   },
   mark: {
     width: 150,
