@@ -28,6 +28,11 @@ class Onboarding extends React.Component {
   render() {
     let {username, navigator} = this.props;
 
+    // <Text style={styles.secondText}>
+    //   After seeing the description you will be tested, and if you answer correctly, you will gain points and increase word strength.
+    // </Text>
+    // <Text style={styles.secondText}>Open the menu in the top left for more modes to practise your Hanzi.</Text> 
+
     return (
       <DrawerLayout
         ref={(drawer) => { return this.drawer = drawer }}
@@ -41,8 +46,7 @@ class Onboarding extends React.Component {
             <Text style={styles.secondText}>
               After seeing the description you will be tested, and if you answer correctly, you will gain points and increase word strength.
             </Text>
-            <Text style={styles.secondText}>Open the menu in the top left for more modes to practise your Hanzi.</Text> 
-            <View style={{margin: 25}}>
+            <View style={{margin: 20}}>
               <Button onPress={this.learn.bind(this)}>Start Learning!</Button>
             </View>
           </View>
@@ -81,7 +85,7 @@ var styles = StyleSheet.create({
     marginLeft: 25,
     marginRight: 25,
     marginTop: 20,
-    marginBottom: 30,
+    marginBottom: 20,
     fontSize: 28,
     fontWeight: 'bold'
   },
